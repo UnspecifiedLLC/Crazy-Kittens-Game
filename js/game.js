@@ -2,22 +2,7 @@ console.log("loaded game.js");
 
 /*
 
-cattermelon: 4
-tacocat: 4
-beardcat: 4
-hairy potato: 4
-rainbow: 4
 
-attack: 4
-nope: 5
-future: 5
-shuffle: 4
-favor: 4
-skip: 4
-
-
-defuse: 6
-exploding: 4
 
 1. Remove all the exploding kittens and defuse cards from the deck.
 2. Shiffle the remaining deck and deal 4 cards face down to each player.
@@ -28,10 +13,10 @@ exploding: 4
 
 var Game = (function(){
 
-  let indexArray = [];
-  for(let i = 0; i < 46; i++){
-    indexArray.push(i);
-  }
+  // let indexArray = [];
+  // for(let i = 0; i < 46; i++){
+  //   indexArray.push(i);
+  // }
 
   function randomIntFromInterval(min,max){
     return Math.floor(Math.random()*(max-min+1)+min);
@@ -40,22 +25,66 @@ var Game = (function(){
   function getCardIndex(inputArray){
     let rand = randomIntFromInterval(0, inputArray.length-1);
     let index = inputArray[rand];
-    inputArray = inputArray.splic(index, 1);
+    inputArray.splice(index, 1);
 
-    return index;
+    return {
+        index: index,
+        shortenedArray: inputArray
+      };
   }
-  // deck = for (... cards[getCardIndex]... );
 
   return{
-    cards:[
-      {
-        face: 'images/cattermelon.png',
-        action: 'regular'
-      },
-    ],
+    regularDeck: Cards.regularDeck,
+    crazyKittensDeck: Cards.crazyKittensDeck,
+    drawPile: null,
+    discardPile: null,
+    usersDeck: null,
+    compsDeck: null,
+
     test: function(){
       console.log("Hiiii");
+      console.log("cards: ", this.regularDeck);
     },
+
+    shuffleDeck: function(cards, indexArray){
+      let shuffledDeck = [];
+      for(let i = 0; i< cards.length; i++){
+        let result = getCardIndex(indexArray);
+        let index = result.index;
+        indexArray = result.shortenedArray;
+        shuffledDeck.push(cards[index]);
+      }
+
+      return shuffledDeck;
+    },
+
+    dealCards: function(origialDeck, goalDeck, numOfCardsToBeDealt){
+
+    }
+
+    /*
+      1st shuffles the Regular Deck (the one without defuse or crazy kittens)
+      2nd deals 4 cards from the Regular Deck to the users deck
+      3rd deals 4 cards from the Regular Deck to the computers deck
+      4th deals 1 defuse card to the users deck
+      5th deals 1 defuse card to the computers deck
+      6th puts the remaining cards from the Regular Deck  and one crazy Kittens into the drawDeck
+    */
+    setUpGame: function(){
+
+      console.log('Regular Deck length before shuffling: ', this.regularDeck.length);
+
+
+      let indexArray = [];
+      for(let i = 0; i < this.regularDeck.length; i++){
+        indexArray.push(i);
+      }
+
+      //1st shuffles the Regular Deck (the one without defuse or crazy kittens)
+      this.regularDeck = this.shuffleDeck(this.regularDeck, indexArray);
+      console.log('Regular Deck: ', this.regularDeck);
+
+    }
 
 
   }

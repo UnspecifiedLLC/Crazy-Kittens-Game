@@ -64,7 +64,8 @@ function loadGameMain(){
   addDrawDiscardPiles();
   addUserSection();
 
-  // let test = Game.test();
+  let test = Game.test();
+  Game.setUpGame();
 
 
 }
