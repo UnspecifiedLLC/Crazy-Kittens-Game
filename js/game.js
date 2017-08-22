@@ -34,6 +34,7 @@ var Game = (function(){
   }
 
   return{
+    turn: 1,
     regularDeck: Cards.regularDeck,
     crazyKittensDeck: Cards.crazyKittensDeck,
     defuseKittensDeck: Cards.defuseKittensDeck,

@@ -19,6 +19,17 @@ exploding: 4
 var Cards = (function(){
 
   return{
+    actions: {
+      action: "you've selected an action card!",
+      crazy: "you've selected a crazy kitten card!",
+      defuse: "you've selected a defuse card!",
+      regular: "you've selected a non-action card!",
+      nope: "you've selected a nope card!",
+      future: "you've selected a future card!",
+      shuffle: "you've selected a shuffle card!",
+      favor: "you've selected a favor card!",
+      skip: "you've selected a skip card!",
+    },
     crazyKittensDeck: [
       {
         face: 'images/crazy.png',
@@ -151,142 +162,142 @@ var Cards = (function(){
       {
         face: 'images/attack.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'attack'
       },
 
       // the 5 nope cards
       {
         face: 'images/nope.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'nope'
       },
 
       // the 5 future cards
       {
         face: 'images/future.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'future'
       },
 
       // the 4 shuffle cards
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'shuffle'
       },
 
       // the 4 favor cards
       {
         face: 'images/favor.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'favor'
       },
 
       // the 4 skip cards
       {
         face: 'images/skip.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
-        action: 'regular'
+        action: 'skip'
       }
 
     ]

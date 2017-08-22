@@ -12,10 +12,16 @@ $link.on('click', function(){
   }else{
     $title.text("Welcome to Crazy Kittens");
     $(this).text("Instructions").css('margin-left', '575px');
-
     loadIndexMain();
   }
 });
+
+let $modal = $('#modal');
+
+// $modal.on('shown.bs.modal', function(event){
+//
+// });
+
 
 function clearMain(){
   $main.empty();
@@ -23,7 +29,6 @@ function clearMain(){
 }
 
 function loadIndexMain(){
-
   clearMain();
   $main.addClass('main-index');
 
@@ -49,7 +54,6 @@ function loadIndexMain(){
     console.log(`clicked the play button`);
     loadGameMain();
   });
-
 }
 
 function loadGameMain(){
@@ -61,10 +65,6 @@ function loadGameMain(){
   $main.addClass('main-game');
 
   Game.setUpGame();
-
-  // addComputerSection();
-  // addDrawDiscardPiles();
-  // addUserSection();
 
   addCardSection("computer", Game.compsDeck);
   addDrawDiscardPiles();
@@ -113,13 +113,27 @@ function addCardSection(player, playerCards){
     }
   }else{
     // we need to display the face value
-    $section.addClass('game-section').attr('id', 'computer-section');
-    $div.attr('id', 'computer-table');
+    $section.addClass('game-section').attr('id', 'user-section');
+    $div.attr('id', 'user-table');
 
     for(let i = 0; i < playerCards.length; i++){
       let $img = $('<img>').attr('src', playerCards[i].face)
           .attr('alt', "")
-          .attr('title', "");
+          .attr('title', "")
+          .data('data-action', playerCards[i].action);
+
+          $img.on('click', function(){
+            // need to make sure it's our turn
+            if(!Game.turn){
+              return;
+            }
+
+          $('#modal-card').attr('src', $(this).attr('src')).addClass($(this).attr('class'));
+          $('#modal-instructions').text(Cards.actions[ $(this).data('data-action') ]);
+          $modal.modal('show');
+
+
+          });
 
       $div.append($img);
     }
@@ -130,56 +144,17 @@ function addCardSection(player, playerCards){
 
 }
 
-// function addComputerSection(){
-//   let $section = $('<section>');
-//   $section.addClass('game-section').attr('id', 'computer-section');
-//
-//   let $div = $('<div>').attr('id', 'computer-table');
-//
-//
-//   for(let i = 0; i < 4; i++){
-//     let $img = $('<img>').attr('src', 'images/back.png')
-//         .attr('alt', "")
-//         .attr('title', "");
-//
-//     $div.append($img);
-//   }
-//   $section.append($div);
-//
-//   $main.append($section);
-//
-// }
-
-// function addUserSection(){
-//   let $section = $('<section>');
-//   $section.addClass('game-section').attr('id', 'user-section');
-//
-//   let $div = $('<div>').attr('id', 'user-table');
-//
-//
-//   for(let i = 0; i < 4; i++){
-//     let $img = $('<img>').attr('src', 'images/back.png')
-//         .attr('alt', "")
-//         .attr('title', "");
-//
-//     $div.append($img);
-//   }
-//   $section.append($div);
-//
-//   $main.append($section);
-//
-// }
 
 function addDrawDiscardPiles(){
   let $section = $('<section>');
   $section.addClass('game-section').attr('id', 'draw-discard');
 
-  let $drawImg = $('<img>').attr('src', 'images/back.png')
+  let $drawImg = $('<img>').attr('src', 'images/draw_back.png')
       .attr('alt', "")
       .attr('title', "")
       .attr('id', 'draw-pile');
 
-  let $discardImg = $('<img>').attr('src', 'images/back.png')
+  let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
       .attr('alt', "")
       .attr('title', "")
       .attr('id', 'discard-pile');
