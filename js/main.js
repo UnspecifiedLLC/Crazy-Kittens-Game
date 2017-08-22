@@ -18,9 +18,65 @@ $link.on('click', function(){
 
 let $modal = $('#modal');
 
+
+let activeCards = [];
+
 // $modal.on('shown.bs.modal', function(event){
 //
 // });
+
+let $modalCancel = $('#modal-cancel');
+$modalCancel.on('click', function(){
+
+  if(Game.turn){
+    // it's the user's turn
+
+    let activeCard = activeCards.pop();
+    if(activeCard.action == "regular" && Game.usersTradeCount == 0){
+      $('#tradeDiv').remove();
+    }
+
+  }else{
+    //it's the computer's turn
+
+  }
+
+});
+
+
+let $modalSubmit = $('#modal-submit');
+
+$modalSubmit.on('click', function(){
+  if(Game.turn){
+    // it's the user's turn
+
+    // if we submitted a regular card AND it is already the second card
+    if(activeCards[0].action == "regular" && Game.usersTradeCount==1){
+      // now we're allowed to take a card from the computer
+      Game.usersTradeCount = 0;
+      console.log('Getting ready to steal!');
+
+      //need to remove the two regular cards from the user's deck
+
+
+    }else if(activeCards[0].action == "regular" && Game.usersTradeCount !=1){
+      // we need to wait for a second regular card to be selected before we can
+      // steal a card from the computer
+      Game.usersTradeCount = 1;
+      addGettingReadyToTradeDiv();
+
+      console.log('Need one more regular card');
+
+    }else{
+      console.log('modal submit: EROOOOOOOOORRRR');
+
+    }
+
+  }else{
+    //the computer's turn
+  }
+
+});
 
 
 function clearMain(){
@@ -120,7 +176,8 @@ function addCardSection(player, playerCards){
       let $img = $('<img>').attr('src', playerCards[i].face)
           .attr('alt', "")
           .attr('title', "")
-          .data('data-action', playerCards[i].action);
+          .data('data-action', playerCards[i].action)
+          .data('data-card-index', i);
 
           $img.on('click', function(){
             // need to make sure it's our turn
@@ -128,8 +185,21 @@ function addCardSection(player, playerCards){
               return;
             }
 
+          activeCards.push(playerCards[$(this).data('data-card-index')]);
+
           $('#modal-card').attr('src', $(this).attr('src')).addClass($(this).attr('class'));
-          $('#modal-instructions').text(Cards.actions[ $(this).data('data-action') ]);
+          let action = Cards.actions[ $(this).data('data-action') ];
+
+          if($(this).data('data-action') == "regular")  {
+
+            $('#modal-instructions').text(action);
+
+
+
+            // addGettingReadyToTradeDiv();
+          }
+
+          // $('#modal-instructions').text(action);
           $modal.modal('show');
 
 
@@ -144,8 +214,34 @@ function addCardSection(player, playerCards){
 
 }
 
+function addGettingReadyToTradeDiv(){
+  if($('#tradeDiv').length){
+    // we don't want to add duplicates
+    return;
+  }
+  let tradeDiv = $('<div>').attr('id', 'tradeDiv');
+  let button = $('<button>').text("Cancel Move");
+
+  button.on('click', function(){
+    //need to cancel the regular action move and remove this div
+
+    // indicating that the user has not already selected a regular card for trade
+    activeCards = [];
+    Game.usersTradeCount = 0;
+
+    $('#tradeDiv').remove();
+  });
+  let p = $('<p>').text("..getting ready to trade");
+  tradeDiv.append(button).append(p);
+  $('#drawPileDiv').append(tradeDiv);
+}
+
+
+
+
 
 function addDrawDiscardPiles(){
+  let $mainDiv = $('<div>').attr('id', 'drawPileDiv').addClass('drawPile');
   let $section = $('<section>');
   $section.addClass('game-section').attr('id', 'draw-discard');
 
@@ -163,7 +259,8 @@ function addDrawDiscardPiles(){
   $section.append($drawImg);
   $section.append($discardImg);
 
-  $main.append($section);
+  $mainDiv.append($section);
+  $main.append($mainDiv);
 }
 
 loadIndexMain();

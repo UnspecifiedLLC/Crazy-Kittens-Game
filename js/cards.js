@@ -23,7 +23,7 @@ var Cards = (function(){
       action: "you've selected an action card!",
       crazy: "you've selected a crazy kitten card!",
       defuse: "you've selected a defuse card!",
-      regular: "you've selected a non-action card!",
+      regular: "You've selected a non-action card. Pick a second non-action card to steal one of your opponent's cards!",
       nope: "you've selected a nope card!",
       future: "you've selected a future card!",
       shuffle: "you've selected a shuffle card!",
