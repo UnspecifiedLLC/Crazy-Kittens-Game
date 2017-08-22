@@ -34,6 +34,7 @@ var Cards = (function(){
       {
         face: 'images/crazy.png',
         down: 'images/back.png',
+        id: null,
         action: 'crazy'
       }
     ],
@@ -42,6 +43,7 @@ var Cards = (function(){
       {
         face: 'images/defuse.png',
         down: 'images/back.png',
+        id: null,
         action: 'defuse'
       }
     ],
@@ -52,21 +54,26 @@ var Cards = (function(){
       {
         face: 'images/cattermelon.png',
         down: 'images/back.png',
+        id: null,
+        action: 'regular'
+
+      },
+      {
+        down: 'images/back.png',
+        face: 'images/cattermelon.png',
+        id: null,
         action: 'regular'
       },
       {
         down: 'images/back.png',
         face: 'images/cattermelon.png',
+        id: null,
         action: 'regular'
       },
       {
         down: 'images/back.png',
         face: 'images/cattermelon.png',
-        action: 'regular'
-      },
-      {
-        down: 'images/back.png',
-        face: 'images/cattermelon.png',
+        id: null,
         action: 'regular'
       },
 
@@ -74,21 +81,25 @@ var Cards = (function(){
       {
         face: 'images/taco.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/taco.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/taco.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/taco.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
 
@@ -96,21 +107,25 @@ var Cards = (function(){
       {
         face: 'images/beard.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/beard.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/beard.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/beard.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
 
@@ -118,21 +133,25 @@ var Cards = (function(){
       {
         face: 'images/potato.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/potato.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/potato.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/potato.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
 
@@ -140,21 +159,25 @@ var Cards = (function(){
       {
         face: 'images/rainbow.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
         down: 'images/back.png',
+        id: null,
         action: 'regular'
       },
 
@@ -162,21 +185,25 @@ var Cards = (function(){
       {
         face: 'images/attack.png',
         down: 'images/back.png',
+        id: null,
         action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
+        id: null,
         action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
+        id: null,
         action: 'attack'
       },
       {
         face: 'images/attack.png',
         down: 'images/back.png',
+        id: null,
         action: 'attack'
       },
 
@@ -184,26 +211,31 @@ var Cards = (function(){
       {
         face: 'images/nope.png',
         down: 'images/back.png',
+        id: null,
         action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
+        id: null,
         action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
+        id: null,
         action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
+        id: null,
         action: 'nope'
       },
       {
         face: 'images/nope.png',
         down: 'images/back.png',
+        id: null,
         action: 'nope'
       },
 
@@ -211,26 +243,31 @@ var Cards = (function(){
       {
         face: 'images/future.png',
         down: 'images/back.png',
+        id: null,
         action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
+        id: null,
         action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
+        id: null,
         action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
+        id: null,
         action: 'future'
       },
       {
         face: 'images/future.png',
         down: 'images/back.png',
+        id: null,
         action: 'future'
       },
 
@@ -238,21 +275,25 @@ var Cards = (function(){
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
+        id: null,
         action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
+        id: null,
         action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
+        id: null,
         action: 'shuffle'
       },
       {
         face: 'images/shuffle.png',
         down: 'images/back.png',
+        id: null,
         action: 'shuffle'
       },
 
@@ -260,21 +301,25 @@ var Cards = (function(){
       {
         face: 'images/favor.png',
         down: 'images/back.png',
+        id: null,
         action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
+        id: null,
         action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
+        id: null,
         action: 'favor'
       },
       {
         face: 'images/favor.png',
         down: 'images/back.png',
+        id: null,
         action: 'favor'
       },
 
@@ -282,21 +327,25 @@ var Cards = (function(){
       {
         face: 'images/skip.png',
         down: 'images/back.png',
+        id: null,
         action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
+        id: null,
         action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
+        id: null,
         action: 'skip'
       },
       {
         face: 'images/skip.png',
         down: 'images/back.png',
+        id: null,
         action: 'skip'
       }
 

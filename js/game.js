@@ -68,7 +68,9 @@ var Game = (function(){
     dealCards: function(origialDeck, goalDeck, numOfCardsToBeDealt){
       for(let i = 0; i < numOfCardsToBeDealt; i++){
         let rand = randomIntFromInterval(0, origialDeck.length-1);
-        goalDeck.push(origialDeck[rand]);
+        let card = origialDeck[rand];
+        card.id = i;
+        goalDeck.push(card);
         origialDeck.splice(rand, 1);
       }
     },

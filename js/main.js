@@ -53,8 +53,23 @@ $modalSubmit.on('click', function(){
     // if we submitted a regular card AND it is already the second card
     if(activeCards[0].action == "regular" && Game.usersTradeCount==1){
       // now we're allowed to take a card from the computer
-      Game.usersTradeCount = 0;
-      console.log('Getting ready to steal!');
+
+      if(activeCards[0].id != activeCards[1].id){
+        Game.usersTradeCount = 0;
+        console.log('Getting ready to steal!');
+        console.log(activeCards);
+        $('#tradeDiv').remove();
+
+
+        activeCards = [];
+
+      }else{
+        console.log("Can't use the same card!");
+        console.log(activeCards[0].id);
+        console.log(activeCards[1].id);
+        activeCards.pop();
+      }
+
 
       //need to remove the two regular cards from the user's deck
 
@@ -163,7 +178,9 @@ function addCardSection(player, playerCards){
     for(let i = 0; i < playerCards.length; i++){
       let $img = $('<img>').attr('src', playerCards[i].down)
           .attr('alt', "")
-          .attr('title', "");
+          .attr('title', "")
+          .data('data-action', playerCards[i].action)
+          .data('data-card-index', i);
 
       $div.append($img);
     }
