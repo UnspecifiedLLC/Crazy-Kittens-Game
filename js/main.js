@@ -60,13 +60,15 @@ function loadGameMain(){
   clearMain();
   $main.addClass('main-game');
 
-  addComputerSection();
-  addDrawDiscardPiles();
-  addUserSection();
-
-  let test = Game.test();
   Game.setUpGame();
 
+  // addComputerSection();
+  // addDrawDiscardPiles();
+  // addUserSection();
+
+  addCardSection("computer", Game.compsDeck);
+  addDrawDiscardPiles();
+  addCardSection("user", Game.usersDeck);
 
 }
 
@@ -92,46 +94,81 @@ function loadInstructionMain(){
 
 }
 
+function addCardSection(player, playerCards){
 
-function addComputerSection(){
   let $section = $('<section>');
-  $section.addClass('game-section').attr('id', 'computer-section');
+  let $div = $('<div>');
 
-  let $div = $('<div>').attr('id', 'computer-table');
+  if(player == "computer"){
+    // we need to display the cards facedown.
+    $section.addClass('game-section').attr('id', 'computer-section');
+    $div.attr('id', 'computer-table');
 
+    for(let i = 0; i < playerCards.length; i++){
+      let $img = $('<img>').attr('src', playerCards[i].down)
+          .attr('alt', "")
+          .attr('title', "");
 
-  for(let i = 0; i < 4; i++){
-    let $img = $('<img>').attr('src', 'images/back.png')
-        .attr('alt', "")
-        .attr('title', "");
+      $div.append($img);
+    }
+  }else{
+    // we need to display the face value
+    $section.addClass('game-section').attr('id', 'computer-section');
+    $div.attr('id', 'computer-table');
 
-    $div.append($img);
+    for(let i = 0; i < playerCards.length; i++){
+      let $img = $('<img>').attr('src', playerCards[i].face)
+          .attr('alt', "")
+          .attr('title', "");
+
+      $div.append($img);
+    }
   }
-  $section.append($div);
 
+  $section.append($div);
   $main.append($section);
 
 }
 
-function addUserSection(){
-  let $section = $('<section>');
-  $section.addClass('game-section').attr('id', 'user-section');
+// function addComputerSection(){
+//   let $section = $('<section>');
+//   $section.addClass('game-section').attr('id', 'computer-section');
+//
+//   let $div = $('<div>').attr('id', 'computer-table');
+//
+//
+//   for(let i = 0; i < 4; i++){
+//     let $img = $('<img>').attr('src', 'images/back.png')
+//         .attr('alt', "")
+//         .attr('title', "");
+//
+//     $div.append($img);
+//   }
+//   $section.append($div);
+//
+//   $main.append($section);
+//
+// }
 
-  let $div = $('<div>').attr('id', 'user-table');
-
-
-  for(let i = 0; i < 4; i++){
-    let $img = $('<img>').attr('src', 'images/back.png')
-        .attr('alt', "")
-        .attr('title', "");
-
-    $div.append($img);
-  }
-  $section.append($div);
-
-  $main.append($section);
-
-}
+// function addUserSection(){
+//   let $section = $('<section>');
+//   $section.addClass('game-section').attr('id', 'user-section');
+//
+//   let $div = $('<div>').attr('id', 'user-table');
+//
+//
+//   for(let i = 0; i < 4; i++){
+//     let $img = $('<img>').attr('src', 'images/back.png')
+//         .attr('alt', "")
+//         .attr('title', "");
+//
+//     $div.append($img);
+//   }
+//   $section.append($div);
+//
+//   $main.append($section);
+//
+// }
 
 function addDrawDiscardPiles(){
   let $section = $('<section>');

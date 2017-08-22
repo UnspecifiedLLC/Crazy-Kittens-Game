@@ -22,6 +22,7 @@ var Cards = (function(){
     crazyKittensDeck: [
       {
         face: 'images/crazy.png',
+        down: 'images/back.png',
         action: 'crazy'
       }
     ],
@@ -29,6 +30,7 @@ var Cards = (function(){
     defuseKittensDeck: [
       {
         face: 'images/defuse.png',
+        down: 'images/back.png',
         action: 'defuse'
       }
     ],
@@ -38,17 +40,21 @@ var Cards = (function(){
       // the 4 cattermelon cards
       {
         face: 'images/cattermelon.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
+        down: 'images/back.png',
         face: 'images/cattermelon.png',
         action: 'regular'
       },
       {
+        down: 'images/back.png',
         face: 'images/cattermelon.png',
         action: 'regular'
       },
       {
+        down: 'images/back.png',
         face: 'images/cattermelon.png',
         action: 'regular'
       },
@@ -56,188 +62,230 @@ var Cards = (function(){
       // the 4 taco cards
       {
         face: 'images/taco.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/taco.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/taco.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/taco.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 beardcat cards
       {
         face: 'images/beard.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/beard.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/beard.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/beard.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 potato cards
       {
         face: 'images/potato.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/potato.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/potato.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/potato.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 rainbow cards
       {
         face: 'images/rainbow.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/rainbow.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 attack cards
       {
         face: 'images/attack.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/attack.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/attack.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/attack.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 5 nope cards
       {
         face: 'images/nope.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/nope.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/nope.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/nope.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/nope.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 5 future cards
       {
         face: 'images/future.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/future.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/future.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/future.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/future.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 shuffle cards
       {
         face: 'images/shuffle.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/shuffle.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/shuffle.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/shuffle.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 favor cards
       {
         face: 'images/favor.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/favor.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/favor.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/favor.png',
+        down: 'images/back.png',
         action: 'regular'
       },
 
       // the 4 skip cards
       {
         face: 'images/skip.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/skip.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/skip.png',
+        down: 'images/back.png',
         action: 'regular'
       },
       {
         face: 'images/skip.png',
+        down: 'images/back.png',
         action: 'regular'
       }
 
