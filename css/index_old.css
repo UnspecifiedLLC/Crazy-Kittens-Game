@@ -23,7 +23,7 @@
 
 }
 
-main .info img{
+main img{
   width: 200px;
   margin-left: 30px;
 }
@@ -37,10 +37,10 @@ main h3{
   font-weight: normal;
 }
 
-main button{
+main a{
   background-color: #FFCC00;
   color: black;
-  /*text-decoration: none;*/
+  text-decoration: none;
   text-align: center;
   font-size: 1em;
   font-family: 'Architects Daughter', cursive;

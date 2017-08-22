@@ -1,4 +1,4 @@
-main{
+.main-game{
   width: 100vw;
   height: 70%;
 
@@ -13,7 +13,7 @@ main{
   align-content: space-between;
 }
 
-section {
+.game-section {
   margin: 0 auto;
 }
 
