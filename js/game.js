@@ -36,10 +36,11 @@ var Game = (function(){
   return{
     regularDeck: Cards.regularDeck,
     crazyKittensDeck: Cards.crazyKittensDeck,
-    drawPile: null,
-    discardPile: null,
-    usersDeck: null,
-    compsDeck: null,
+    defuseKittensDeck: Cards.defuseKittensDeck,
+    drawPile: [],
+    discardPile: [],
+    usersDeck: [],
+    compsDeck: [],
 
     test: function(){
       console.log("Hiiii");
@@ -58,9 +59,17 @@ var Game = (function(){
       return shuffledDeck;
     },
 
+    /*
+      pops n number of cards from the originalDeck and pushes them into the
+      goalDeck
+    */
     dealCards: function(origialDeck, goalDeck, numOfCardsToBeDealt){
-
-    }
+      for(let i = 0; i < numOfCardsToBeDealt; i++){
+        let rand = randomIntFromInterval(0, origialDeck.length-1);
+        goalDeck.push(origialDeck[rand]);
+        origialDeck.splice(rand, 1);
+      }
+    },
 
     /*
       1st shuffles the Regular Deck (the one without defuse or crazy kittens)
@@ -82,7 +91,25 @@ var Game = (function(){
 
       //1st shuffles the Regular Deck (the one without defuse or crazy kittens)
       this.regularDeck = this.shuffleDeck(this.regularDeck, indexArray);
-      console.log('Regular Deck: ', this.regularDeck);
+      // console.log('Regular Deck: ', this.regularDeck);
+
+      // 2nd deals 4 cards from the Regular Deck to the users deck
+      this.dealCards(this.regularDeck, this.usersDeck, 4);
+      // console.log('Users Deck: ', this.usersDeck);
+
+      // 3rd deals 4 cards from the Regular Deck to the computers deck
+      this.dealCards(this.regularDeck, this.compsDeck, 4);
+      // console.log('Users Deck: ', this.compsDeck);
+
+      // 4th deals 1 defuse card to the users deck
+      this.usersDeck.push(this.defuseKittensDeck[0]);
+
+      // 5th deals 1 defuse card to the computers deck
+      this.compsDeck.push(this.defuseKittensDeck[0]);
+
+      console.log('reg deck length: (should be 38)', this.regularDeck.length);
+      console.log('Users Deck: ', this.usersDeck);
+      console.log('Comps Deck: ', this.compsDeck);
 
     }
 
