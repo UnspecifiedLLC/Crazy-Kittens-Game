@@ -15,22 +15,26 @@ $link.on('click', function(){
 
     loadIndexMain();
   }
-
 });
 
-function loadIndexMain(){
+function clearMain(){
   $main.empty();
   $main.removeClass();
+}
+
+function loadIndexMain(){
+
+  clearMain();
   $main.addClass('main-index');
 
   let div = $('<div>').addClass('info');
   let section = $('<section>');
   let h2 = $('<h2>').text('In a nutshell');
   let h3 = $('<h3>').text('If the Crazy Kitten gets you, you lose.');
-  let h31 = $('<h3>').text('If you can avert the Crazy Kitten, you win.');
-  let h32 = $('<h3>').text('Increase your chance of winning by using the other Kitten cards wisely.');
+  let h3_2 = $('<h3>').text('If you can avert the Crazy Kitten, you win.');
+  let h3_3 = $('<h3>').text('Increase your chance of winning by using the other Kitten cards wisely.');
 
-  section.append(h2).append(h3).append(h31).append(h32);
+  section.append(h2).append(h3).append(h3_2).append(h3_3);
   div.append(section);
 
   let img = $('<img>').attr('src', 'images/crazy.png');
@@ -53,21 +57,24 @@ function loadGameMain(){
 
   $link.text("Home").css('margin-left', '315px');
 
-  $main.empty();
-  $main.removeClass('main-index');
+  clearMain();
   $main.addClass('main-game');
 
   addComputerSection();
   addDrawDiscardPiles();
   addUserSection();
+
+  // let test = Game.test();
+
+
 }
 
 function loadInstructionMain(){
   $title.text("Welcome to Crazy Kittens");
   $link.text("Home").css('margin-left', '315px');
 
-  $main.empty();
-  $main.removeClass();
+
+  clearMain();
   $main.addClass('main-index');
 
   let $sectionSetUp = $('<section>').attr('id', 'setup');
