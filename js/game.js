@@ -116,12 +116,23 @@ let Game = (function(){
       console.log('Users Deck: ', this.usersDeck);
       console.log('Comps Deck: ', this.compsDeck);
 
-      //6th puts the remaining cards from the Regular Deck  and one crazy Kittens into the drawDeck
+      //6th puts the remaining cards from the Regular Deck and the crazy Kittens into the drawDeck
       for(let i = 0; i < this.regularDeck.length; i++){
         this.drawPile.push(this.regularDeck[i]);
       }
-      console.log('Draw Pile: ', this.drawPile);
 
+      // drawPile will have (38+x) 48 cards in total
+      for(let i = 0; i < 10; i++){
+        this.drawPile.push(this.crazyKittensDeck[0]);
+      }
+
+      indexArray = [];
+      for(let i = 0; i < 48; i++){
+        indexArray.push(i);
+      }
+      this.drawPile = this.shuffleDeck(this.drawPile, indexArray);
+
+      console.log('Draw Pile: ', this.drawPile);
 
     }
 
