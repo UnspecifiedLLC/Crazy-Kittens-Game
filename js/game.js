@@ -70,7 +70,7 @@ let Game = (function(){
     dealCards: function(origialDeck, goalDeck, numOfCardsToBeDealt){
       for(let i = 0; i < numOfCardsToBeDealt; i++){
         let rand = randomIntFromInterval(0, origialDeck.length-1);
-        let card = origialDeck[rand];
+        let card = this.copyCard(origialDeck[rand]);
         card.id = i;
         goalDeck.push(card);
         origialDeck.splice(rand, 1);
@@ -98,6 +98,7 @@ let Game = (function(){
       //1st shuffles the Regular Deck (the one without defuse or crazy kittens)
       this.regularDeck = this.shuffleDeck(this.regularDeck, indexArray);
       // console.log('Regular Deck: ', this.regularDeck);
+
 
       // 2nd deals 4 cards from the Regular Deck to the users deck
       this.dealCards(this.regularDeck, this.usersDeck, 4);
@@ -135,6 +136,16 @@ let Game = (function(){
 
       console.log('Draw Pile: ', this.drawPile);
 
+    },
+
+    copyCard: function(originalCard){
+      let newObj = {};
+      newObj.action = originalCard.action;
+      newObj.face = originalCard.face;
+      newObj.down = originalCard.down;
+      newObj.id = originalCard.id;
+
+      return newObj;
     }
 
 

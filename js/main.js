@@ -305,7 +305,7 @@ function onImageClick(playerCards, $me){
       //trigger computer's turn
 
     }else if(Turn.step == 2){
-      // have traded in 2 of our own cards and must now steal a card from opponent
+      // want to trade in 2 of our own cards and must now steal a card from opponent
       if(cardOwner == Turn.player){
         $gameNoteField.text("You must steal from your opponent");
         return;
@@ -364,6 +364,7 @@ function moveCardFromDeckIntoDiscardPile(deck, activeCards){
      }
 
      card.id = Game.discardPile.length;
+     $('#discard-pile').attr('src', card.face);
      Game.discardPile.push(card);
      deck.splice(index, 1);
   }
