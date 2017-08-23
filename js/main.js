@@ -46,7 +46,8 @@ $modalCancel.on('click', function() {
 let $modalSubmit = $('#modal-submit');
 
 $modalSubmit.on('click', function() {
-  if (Game.turn) {
+  if (Turn.player) {
+  // if (Game.turn) {
     // it's the user's turn
 
     // if we submitted a regular card AND it is already the second card
@@ -83,6 +84,7 @@ $modalSubmit.on('click', function() {
       Game.usersTradeCount = 1;
       addGettingReadyToTradeDiv();
 
+
       console.log('Need one more regular card');
 
     } else {
@@ -92,9 +94,52 @@ $modalSubmit.on('click', function() {
 
   } else {
     //the computer's turn
+    if(activeCards.length == 1){
+      debugger;
+      startComputersTurn(1);
+
+    }else{
+      debugger;
+
+      Game.usersTradeCount = 0;
+      console.log('Getting ready to steal!');
+      $('#game-step').text("Steal one of your opponent's cards");
+
+      Turn.step = 2;
+
+      console.log(activeCards);
+      $('#tradeDiv').css('visibility', 'hidden');
+
+
+      setTimeout(function(){
+        debugger;
+
+        computerStealCardFromUser();
+      }, 2000);
+    }
+
+
+
   }
 
 });
+
+function computerStealCardFromUser(){
+  console.log("Computer is about to steal a card!");
+
+  // represents the user's card the computer is about to steal
+
+  let rand = (Math.floor(Math.random()*((Game.usersDeck.length-1))-0+1)+0) +1;
+
+  let stolenCard = $(`#user-table img:nth-of-type(${rand})`);
+  console.log("rand: ", rand);
+  console.log(stolenCard);
+  console.log(stolenCard.data());
+
+  stolenCard.click();
+
+
+}
 
 
 function clearMain() {
@@ -191,12 +236,13 @@ function addCardSection(player, playerCards) {
     $section.addClass('game-section').attr('id', 'computer-section');
     $div.attr('id', 'computer-table');
 
+
     for (let i = 0; i < playerCards.length; i++) {
       let $img = $('<img>').attr('src', playerCards[i].down)
-        .attr('alt', "")
+        .attr('alt', playerCards[i].face)
         .attr('title', "")
         .data('data-action', playerCards[i].action)
-        .data('data-card-index', i)
+        .data('data-card-index', playerCards[i].id)
         .data('data-player', 0);
 
       $img.on('click', function(){
@@ -215,9 +261,11 @@ function addCardSection(player, playerCards) {
     $section.addClass('game-section').attr('id', 'user-section');
     $div.attr('id', 'user-table');
 
+    console.log("playerCards: ", playerCards);
+
     for (let i = 0; i < playerCards.length; i++) {
       let $img = $('<img>').attr('src', playerCards[i].face)
-        .attr('alt', "")
+        .attr('alt', playerCards[i].face)
         .attr('title', "")
         .data('data-action', playerCards[i].action)
         .data('data-card-index', i)
@@ -299,10 +347,13 @@ function onImageClick(playerCards, $me){
       gameTurnField.text('Turn: Computer');
       gameStepField.text('Select one of your own cards, computer');
 
+      // indicating that it is the computer's turn
       Turn.step = 0;
-      Turn.turn = 0;
+      Turn.player = 0;
 
       //trigger computer's turn
+      debugger;
+      startComputersTurn(0);
 
     }else if(Turn.step == 2){
       // want to trade in 2 of our own cards and must now steal a card from opponent
@@ -311,20 +362,28 @@ function onImageClick(playerCards, $me){
         return;
       }
 
-      let toBeRemoved = $me.data('data-card-index');
-      console.log("index: ",toBeRemoved);
+      let id = $me.data('data-card-index');
+      console.log("me: ",$me);
+      console.log("me: ",$me.data());
+      console.log("index: ",id);
 
       // remove the 2 traded cards from your deck
       console.log("activeCards",activeCards);
+      console.log("usersdeck: ", Game.usersDeck);
+
       moveCardFromDeckIntoDiscardPile(Game.usersDeck, activeCards);
+      console.log("usersdeck: ", Game.usersDeck);
       console.log('discard pile: ', Game.discardPile);
 
       // add the stolen card to your deck
-      Game.usersDeck.push(Game.compsDeck[toBeRemoved]);
+      // let cardToBeRemoved = Game.compsDeck[toBeRemoved];
+      let cardToBeRemoved = findCardInDeck($me.data().dataAction, id, Game.compsDeck);
+      Game.usersDeck.push(cardToBeRemoved);
+      console.log("usersdeck: ", Game.usersDeck);
 
       // remove the card from the computer's deck
-      Game.compsDeck.splice(toBeRemoved, 1);
-
+      Game.compsDeck.splice(id, 1);
+      console.log("compsdeck: ", Game.compsDeck);
 
       addCardSection("computer", Game.compsDeck);
       addCardSection("player", Game.usersDeck);
@@ -340,15 +399,168 @@ function onImageClick(playerCards, $me){
 
   }else{
     // this means it's the computer's turn
+    console.log("Comps turn, on image click");
+    if(Turn.step == 0){
+      if(cardOwner != Turn.player){
+        $gameNoteField.text("You must choose from your own cards");
+        return;
+      }
+
+
+      let id = $me.data('data-card-index');
+      let face = $me.attr('alt');
+      let cardAction = $me.data().dataAction;
+
+      let activeCard = findCardInDeck(cardAction, id, playerCards);
+
+      console.log("Comps deck: ", Game.compsDeck);
+      console.log(activeCard);
+      debugger;
+      activeCards.push(activeCard);
+
+      $('#modal-card').attr('src', $me.attr('alt')).addClass($me.attr('class'));
+      let action = Cards.actions[$me.data('data-action')];
+
+      if ($me.data('data-action') == "regular") {
+        $('#modal-instructions').text(action);
+      }else{
+        $('#modal-instructions').text(action);
+      }
+
+      $modal.modal('show');
+
+      setTimeout(function(){
+        $modalSubmit.click();
+      }, 2000);
+
+    }else if(Turn.step == 1){
+      console.log("Computer is about to draw a new Card.");
+
+      console.log("Draw pile: ", playerCards);
+      if(cardOwner == 2){
+        $gameNoteField.text("You must draw from the draw pile!");
+        return;
+      }
+
+      let newCard = playerCards.pop();
+      newCard.id = Game.compsDeck.length;
+
+      if(newCard.action == 'crazy'){
+        console.log("ahhhhhhhhhh, a crazy kitten!!!");
+
+        // display crazy kitten and check if there's a defuse card
+
+      }
+
+      Game.compsDeck.push(newCard);
+
+      addCardSection("computer", Game.compsDeck);
+
+      gameTurnField.text('Turn: User');
+      gameStepField.text('Select one of your own cards, user');
+
+      Turn.step = 0;
+      Turn.player = 1;
+
+    }else if(Turn.step == 2){
+
+      console.log("Need to add the steal logic to remove the card from the user's deck");
+
+      console.log("usersDeck: ", Game.usersDeck);
+      console.log("usersDeck: ", Game.compsDeck);
+
+      let id = $me.data('data-card-index');
+      console.log("index: ",id);
+
+      debugger;
+
+      // remove the 2 traded cards from your deck
+      console.log("activeCards",activeCards);
+      moveCardFromDeckIntoDiscardPile(Game.compsDeck, activeCards);
+      console.log('discard pile: ', Game.discardPile);
+
+      debugger;
+
+      // add the stolen card to your deck
+      let action = $me.data().dataAction;
+      let cardToBeRemoved = findCardInDeck(action, id, Game.usersDeck);
+      Game.compsDeck.push(cardToBeRemoved);
+      debugger;
+
+      // remove the card from the user's deck
+      Game.usersDeck.splice(id, 1);
+      debugger;
+
+
+      addCardSection("computer", Game.compsDeck);
+      debugger;
+
+      addCardSection("player", Game.usersDeck);
+
+      activeCards = [];
+
+
+      Turn.step = 1;
+      gameStepField.text("Draw a card from the Draw Pile");
+
+    }
+
+
   }
 
 }
 
-function computerSelectFirstCard(){
+function findCardInDeck(action, id, deck){
+  // let cardToBeRemoved = Game.compsDeck[toBeRemoved];
+  let card = {};
+  for(let i = 0; i < deck.length; i++){
+    if(deck[i].action == action && deck[i].id == id ){
+      card.action = deck[i].action;
+      card.face = deck[i].face;
+      card.down = deck[i].down;
+      card.id = deck[i].id;
+    }
+  }
+
+  return card;
+
+}
+
+/*
+  Chooses and activates the computer's first card
+*/
+function startComputersTurn(ind){
+
+  console.log("in startComputersTurn, index: ", ind);
+  console.log("in startComputersTurn, comps deck: : ", Game.compsDeck);
+
+  setTimeout(function(){
+    console.log("Computer is moving!");
+    let card = Game.copyCard(Game.compsDeck[ind]);
+    debugger;
+    console.log("Looking for: ", card);
+
+    let images = $('#computer-table img');
+    let image = null;
+    $.each(images, function(index, value){
+      console.log("this: ", $(this));
+      console.log("this alt: ", $(this).attr('alt'));
+      console.log("this id: ", $(this).data().dataCardIndex);
+      console.log("");
+      if($(this).data().dataCardIndex == card.id && $(this).attr('alt') == card.face){
+        console.log("found the card: ", $(this));
+        image = $(this);
+      }
+    });
+    debugger;
+    image.click();
+
+  }, 2000);
 
 }
 
 function moveCardFromDeckIntoDiscardPile(deck, activeCards){
+
 
   for(let i = 0; i < activeCards.length; i++){
     let face = activeCards[i].face;
@@ -363,10 +575,15 @@ function moveCardFromDeckIntoDiscardPile(deck, activeCards){
        }
      }
 
+     if(card == null){
+       debugger
+     }
+
      card.id = Game.discardPile.length;
      $('#discard-pile').attr('src', card.face);
      Game.discardPile.push(card);
      deck.splice(index, 1);
+
   }
 }
 
@@ -396,10 +613,16 @@ function addGettingReadyToTradeDiv() {
 }
 
 function addDrawDiscardPiles() {
+
   let $mainDiv = $('<div>').attr('id', 'drawPileDiv').addClass('drawPile');
   let $div = $('<div>').attr('id', 'game-status-instructions');
 
-  let $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
+  let $turn = null;
+  if(Game.turn){
+    $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
+  }else{
+    $turn = $('<p>').attr('id', 'game-turn').text("Turn: Computer");
+  }
   let $step = $('<p>').attr('id', 'game-step').text("Select a card to play!");
   $gameNoteField = $('<p>').attr('id', 'game-note').text("");
 
@@ -416,15 +639,25 @@ function addDrawDiscardPiles() {
   $drawImg.on('click', function(){
     onImageClick(Game.drawPile, $(this));
   });
-
-  let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
-    .attr('alt', "")
-    .attr('title', "")
-    .attr('id', 'discard-pile');
-
-
   $section.append($drawImg);
-  $section.append($discardImg);
+
+
+  if(!Game.discardPile.length){
+    let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
+      .attr('alt', "")
+      .attr('title', "")
+      .attr('id', 'discard-pile');
+      $section.append($discardImg);
+  }else{
+    let $discardImg = $('<img>').attr('src', Game.discardPile[Game.discardPile.length-1].face)
+      .attr('alt', "")
+      .attr('title', "")
+      .attr('id', 'discard-pile');
+      $section.append($discardImg);
+  }
+
+
+
 
   $mainDiv.append($div);
   $mainDiv.append($section);

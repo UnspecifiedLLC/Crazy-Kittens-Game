@@ -109,10 +109,14 @@ let Game = (function(){
       // console.log('Users Deck: ', this.compsDeck);
 
       // 4th deals 1 defuse card to the users deck
-      this.usersDeck.push(this.defuseKittensDeck[0]);
+      let userDefuse = this.copyCard(this.defuseKittensDeck[0]);
+      userDefuse.id = 4;
+      this.usersDeck.push(userDefuse);
 
       // 5th deals 1 defuse card to the computers deck
-      this.compsDeck.push(this.defuseKittensDeck[0]);
+      let compDefuse = this.copyCard(this.defuseKittensDeck[0]);
+      compDefuse.id = 4;
+      this.compsDeck.push(compDefuse);
 
       console.log('reg deck length: (should be 38)', this.regularDeck.length);
       console.log('Users Deck: ', this.usersDeck);
