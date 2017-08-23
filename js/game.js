@@ -11,7 +11,7 @@ console.log("loaded game.js");
 
 */
 
-var Game = (function(){
+let Game = (function(){
 
   // let indexArray = [];
   // for(let i = 0; i < 46; i++){
@@ -36,7 +36,8 @@ var Game = (function(){
   return{
     turn: 1, // represents who's turn it is. 1 -> user, 0 -> comp
     usersTradeCount: 0,
-    regularDeck: Cards.regularDeck,
+    // regularDeck: Cards.regularDeck,
+    regularDeck: Cards.testDeck,
     crazyKittensDeck: Cards.crazyKittensDeck,
     defuseKittensDeck: Cards.defuseKittensDeck,
     drawPile: [],
@@ -114,6 +115,13 @@ var Game = (function(){
       console.log('reg deck length: (should be 38)', this.regularDeck.length);
       console.log('Users Deck: ', this.usersDeck);
       console.log('Comps Deck: ', this.compsDeck);
+
+      //6th puts the remaining cards from the Regular Deck  and one crazy Kittens into the drawDeck
+      for(let i = 0; i < this.regularDeck.length; i++){
+        this.drawPile.push(this.regularDeck[i]);
+      }
+      console.log('Draw Pile: ', this.drawPile);
+
 
     }
 

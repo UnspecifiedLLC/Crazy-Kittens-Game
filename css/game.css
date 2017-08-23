@@ -27,7 +27,18 @@
 .drawPile{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+#game-status-instructions{
+  width: 250px;
+  height: 200px;
+  background-color: white;
+}
+
+#game-note{
+  color: red;
+  font-weight: bold;
 }
 
 #user-section img:hover, #draw-discard img:hover{
