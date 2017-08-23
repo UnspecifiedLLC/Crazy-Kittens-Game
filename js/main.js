@@ -121,7 +121,11 @@ function loadIndexMain() {
 
   $main.append(div);
 
-  $playButton = $('<button>').attr('id', 'play').text('Play');
+  if(Game.inPlay){
+    $playButton = $('<button>').attr('id', 'play').text('Continue');
+  }else{
+    $playButton = $('<button>').attr('id', 'play').text('Play');
+  }
   $main.append($playButton);
 
   $playButton.on('click', function() {
@@ -138,7 +142,12 @@ function loadGameMain() {
   clearMain();
   $main.addClass('main-game');
 
-  Game.setUpGame();
+  // we only want to set up the game and dispense the initial cards once
+  if(!Game.inPlay){
+    Game.setUpGame();
+  }
+  Game.inPlay++;
+
 
   addCardSection("computer", Game.compsDeck);
   addDrawDiscardPiles();

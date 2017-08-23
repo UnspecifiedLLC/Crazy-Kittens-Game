@@ -34,6 +34,7 @@ let Game = (function(){
   }
 
   return{
+    inPlay: 0,
     turn: 1, // represents who's turn it is. 1 -> user, 0 -> comp
     usersTradeCount: 0,
     // regularDeck: Cards.regularDeck,
