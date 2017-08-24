@@ -1,11 +1,18 @@
 console.log("loaded");
+
+// Global Variables:
 let $playButton;
 let $main = $('.main-index');
-
 let $title = $('#title');
+let $modalSubmit = $('#modal-submit');
 let $gameNoteField;
-
+let $modal = $('#modal');
+let activeCards = [];
+let $modalCancel = $('#modal-cancel');
 let $link = $('#title-link');
+
+
+// on-click listener for navigation bar link
 $link.on('click', function() {
   if ($(this).text() == "Instructions") {
     console.log("Need to open the Instructions");
@@ -17,12 +24,8 @@ $link.on('click', function() {
   }
 });
 
-let $modal = $('#modal');
-let activeCards = [];
-
-let $modalCancel = $('#modal-cancel');
+// on-click listener for cancel-modal button
 $modalCancel.on('click', function() {
-
   if (Turn.player) {
     // it's the user's turn
     let activeCard = activeCards.pop();
@@ -30,260 +33,86 @@ $modalCancel.on('click', function() {
       $('#tradeDiv').css('visibility', 'hidden');
     }
 
-  } else {
-    //it's the computer's turn
-
   }
-
 });
 
+/*
+  on-click listener for submit-modal button
+  The modal displays the currently selected card. By clicking the submit button,
+  the player indicates that they want to perform the action indicated on the card
 
-let $modalSubmit = $('#modal-submit');
-
-function areCardsEqual(cardOne, cardTwo){
-  let equal = true;
-  for(let key in cardOne){
-    if (cardOne.hasOwnProperty(key)) {
-      if(cardOne[key] != cardTwo[key]){
-        equal = false;
-        return equal;
-      }
-  }
-
-  }
-}
-
+  This event listener determines, depending on the current player's step, which
+  action to perform
+*/
 $modalSubmit.on('click', function() {
   if (Turn.player) {
     // it's the user's turn
 
     // if we submitted a regular card or a defuse card AND it is already the second card
-    if ((activeCards[0].action == "regular" || activeCards[0].action == "defuse") && Game.usersTradeCount == 1) {
-      // now we're allowed to take a card from the computer
+        if ((activeCards[0].action == "regular" || activeCards[0].action == "defuse") && Game.usersTradeCount == 1) {
+          // now we're allowed to take a card from the computer
 
-      if ( !areCardsEqual(activeCards[0], activeCards[1]) ) {
-        Game.usersTradeCount = 0;
-        console.log('Getting ready to steal!');
-        $('#game-step').text("Steal one of your opponent's cards");
+              // the user cannot reuse the same card to perform the action
+              if ( !areCardsEqual(activeCards[0], activeCards[1]) ) {
+                Game.usersTradeCount = 0;
+                $('#game-step').text("Steal one of your opponent's cards");
 
-        Turn.step = 2;
+                // this allows the user to advance to the steal-oppenents card step
+                Turn.step = 2;
 
-        console.log(activeCards);
-        $('#tradeDiv').css('visibility', 'hidden');
-        // activeCards = [];
+                // hiding the cancel-trade-div button since the user is about to
+                // steal a card from the opponent
+                $('#tradeDiv').css('visibility', 'hidden');
 
-      } else {
-        console.log("Can't use the same card!");
-        $gameNoteField.text("..sorry, can't select the same card twice!. Try again.");
+              } else {
+                // if the user tried to reuse the same card to perform the action,
+                // we need to remove the last card-submission from
+                // the history / activeCards array
+                $gameNoteField.text("..sorry, can't select the same card twice!. Try again.");
+                activeCards.pop();
+              }
 
-        console.log(activeCards[0].id);
-        console.log(activeCards[1].id);
-        activeCards.pop();
-      }
+        } else if ( (activeCards[0].action == "regular" || activeCards[0].action == "defuse")  && Game.usersTradeCount != 1) {
+                // we need to wait for a second regular card to be selected before we can
+                // steal a card from the computer
+                Game.usersTradeCount = 1;
 
+                // this div allows the user to cancel the current card-action selection
+                addGettingReadyToTradeDiv();
 
-      //need to remove the two regular cards from the user's deck
-
-
-    } else if ( (activeCards[0].action == "regular" || activeCards[0].action == "defuse")  && Game.usersTradeCount != 1) {
-      // we need to wait for a second regular card to be selected before we can
-      // steal a card from the computer
-      Game.usersTradeCount = 1;
-      addGettingReadyToTradeDiv();
-
-
-      console.log('Need one more regular card');
-
-    } else {
-      console.log('modal submit: EROOOOOOOOORRRR');
-      console.log(activeCards);
-      alert("Error, in modal submit. card: ", activeCards[0].action );
-    }
-
+        } else {
+                console.log(activeCards);
+                alert("Error, in modal submit. card: ", activeCards[0].action );
+        }
 
     //the computer's turn
   } else {
-    if(activeCards.length == 1){
-      // debugger;
-
-      startComputersTurn(1);
-    }else{
-      Game.usersTradeCount = 0;
-      $('#game-step').text("Steal one of your opponent's cards");
-
-      Turn.step = 2;
-
-      console.log(activeCards);
-      $('#tradeDiv').css('visibility', 'hidden');
+        if(activeCards.length == 1){
+          // if the computer has only selected one card so far, the computer needs
+          // to select another card before the computer can perform the action
 
 
-      setTimeout(function(){
-        console.log("Computer is about to call computerPickCardToBeStolen");
-        computerPickCardToBeStolen();
-      }, 2000);
-    }
+          startComputersTurn(1);
+        }else{
+          // here the computer has just submitted a second card and is ready
+          // to steal a card from the user
+
+          Game.usersTradeCount = 0;
+          $('#game-step').text("Steal one of your opponent's cards");
+
+          // advances the player to the 'steal a card from opponent step'
+          Turn.step = 2;
+
+          $('#tradeDiv').css('visibility', 'hidden');
+
+          setTimeout(function(){
+            console.log("Computer is about to call computerPickCardToBeStolen");
+            computerPickCardToBeStolen();
+          }, 2000);
+        }
   }
 
 });
-
-function computerPickCardToBeStolen(){
-  console.log("Computer is about to pick the card it wants to steal");
-
-  // represents the user's card the computer is about to steal
-  let rand = (Math.floor(Math.random()*((Game.usersDeck.length-1))-0+1)+0) +1;
-
-  let stolenCard = $(`#user-table img:nth-of-type(${rand})`);
-  console.log("rand: ", rand);
-  console.log("computer has picked the following card to be stolen: ", stolenCard);
-  console.log(stolenCard.data());
-
-  stolenCard.click();
-}
-
-
-function clearMain() {
-  $main.empty();
-  $main.removeClass();
-}
-
-function loadIndexMain() {
-  clearMain();
-  $main.addClass('main-index');
-
-  let div = $('<div>').addClass('info');
-  let section = $('<section>');
-  let h2 = $('<h2>').text('In a nutshell');
-  let h3 = $('<h3>').text('If the Crazy Kitten gets you, you lose.');
-  let h3_2 = $('<h3>').text('If you can avert the Crazy Kitten, you win.');
-  let h3_3 = $('<h3>').text('Increase your chance of winning by using the other Kitten cards wisely.');
-
-  section.append(h2).append(h3).append(h3_2).append(h3_3);
-  div.append(section);
-
-  let img = $('<img>').attr('src', 'images/crazy.png');
-  div.append(img);
-
-  $main.append(div);
-
-  if(Game.inPlay){
-    $playButton = $('<button>').attr('id', 'play').text('Continue');
-  }else{
-    $playButton = $('<button>').attr('id', 'play').text('Play');
-  }
-  $main.append($playButton);
-
-  $playButton.on('click', function() {
-    console.log(`clicked the play button`);
-    loadGameMain();
-  });
-}
-
-function loadGameMain() {
-  $title.text("Crazy Kittens");
-
-  $link.text("Home").css('margin-left', '315px');
-
-  clearMain();
-  $main.addClass('main-game');
-
-  // we only want to set up the game and dispense the initial cards once
-  if(!Game.inPlay){
-    Game.setUpGame();
-  }
-  Game.inPlay++;
-
-
-  addCardSection("computer", Game.compsDeck);
-  addDrawDiscardPiles();
-  addCardSection("user", Game.usersDeck);
-
-
-}
-
-function loadInstructionMain() {
-  $title.text("Welcome to Crazy Kittens");
-  $link.text("Home").css('margin-left', '315px');
-
-
-  clearMain();
-  $main.addClass('main-index');
-
-  let $sectionSetUp = $('<section>').attr('id', 'setup');
-  let p1 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-
-  $sectionSetUp.append(p1);
-  let $sectionTurn = $('<section>').attr('id', 'turn');
-
-  let p2 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-  $sectionTurn.append(p2);
-
-  $main.append($sectionSetUp);
-  $main.append($sectionTurn);
-
-}
-
-function addCardSection(player, playerCards) {
-  if (player == "computer") {
-    // we need to display the cards facedown.
-    addImages("computer-section", "computer-table", playerCards, 0);
-
-  } else {
-    // we need to display the face value
-    addImages("user-section", "user-table", playerCards, 1);
-
-  }
-}
-
-function addImages(section, table, playerCards, player){
-  let $section = $('<section>');
-  let $div = $('<div>');
-
-  $(`#${section}`).remove();
-
-  $section.addClass('game-section').attr('id', `${section}`);
-  $div.attr('id', `${table}`);
-
-
-  for (let i = 0; i < playerCards.length; i++) {
-    let $img = $('<img>');
-    if(!player){
-      $img.attr('src', playerCards[i].down);
-    }else{
-      $img.attr('src', playerCards[i].face);
-    }
-      $img.attr('alt', playerCards[i].face)
-        .attr('title', "")
-        .data('data-action', playerCards[i].action);
-      $img.data('data-card-index', playerCards[i].id);
-
-      $img.data('data-player', player);
-
-    $img.on('click', function(){
-      onImageClick(playerCards, $(this));
-    });
-    $div.append($img);
-  }
-
-  $section.append($div);
-  if(!player){
-    $main.prepend($section);
-  }else{
-    $main.append($section);
-  }
-}
-
-
-function findIndexOfOurDefuse(deck){
-  let index = -1;
-  for(let i = 0; i < deck.length; i++){
-    if(deck[i].action == "defuse"){
-      index = i;
-      break;
-    }
-  }
-
-  return index;
-}
 
 function onImageClick(playerCards, $me){
   // need to make sure it's our turn
@@ -332,19 +161,15 @@ function onImageClick(playerCards, $me){
             Turn.player = 0;
             startComputersTurn(0);
           }
-
         }else{
           // we've lost
           buildGameOverScreen(Turn.player);
         }
       }else{
         // the new card was not a Crazy Kitten
-
         console.log("new card: ", newCard);
         Game.usersDeck.push(newCard);
-
         addCardSection("player", Game.usersDeck);
-
         if(Game.compsDeck.length < 2){
           /*
             The user's turn is about to start: if the user has less than 2 cards,
@@ -363,7 +188,6 @@ function onImageClick(playerCards, $me){
           startComputersTurn(0);
         }
       }
-
     }else if(Turn.step == 2){
       performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, Game.usersDeck, Game.compsDeck);
     }
@@ -371,10 +195,7 @@ function onImageClick(playerCards, $me){
 
     // this means it's the computer's turn
   }else{
-
-
     if(Turn.step == 0){
-
       // loads the clicked card into the modal and adds the chosen to activeCards
       performStepOne($gameNoteField, $me, Game.compsDeck, cardOwner);
 
@@ -396,13 +217,165 @@ function onImageClick(playerCards, $me){
   }
 }
 
-function haveEnoughCardsToPlay(playersDeck){
-  if(players.length > 1){
-    return true;
+
+
+
+
+
+
+
+
+/*
+  Removes the html content from the main section
+*/
+function clearMain() {
+  $main.empty();
+  $main.removeClass();
+}
+
+/*
+  Adds the basic html for the home page.
+*/
+function loadIndexMain() {
+  clearMain();
+  $main.addClass('main-index');
+
+  let div = $('<div>').addClass('info');
+  let section = $('<section>');
+  let h2 = $('<h2>').text('In a nutshell');
+  let h3 = $('<h3>').text('If the Crazy Kitten gets you, you lose.');
+  let h3_2 = $('<h3>').text('If you can avert the Crazy Kitten, you win.');
+  let h3_3 = $('<h3>').text('Increase your chance of winning by using the other Kitten cards wisely.');
+
+  section.append(h2).append(h3).append(h3_2).append(h3_3);
+  div.append(section);
+
+  let img = $('<img>').attr('src', 'images/crazy.png');
+  div.append(img);
+
+  $main.append(div);
+
+  if(Game.inPlay){
+    $playButton = $('<button>').attr('id', 'play').text('Continue');
   }else{
-    return false;
+    $playButton = $('<button>').attr('id', 'play').text('Play');
+  }
+  $main.append($playButton);
+
+  $playButton.on('click', function() {
+    console.log(`clicked the play button`);
+    loadGameMain();
+  });
+}
+
+/*
+  Adds the basic html for the game 'page'
+  This first removes everything from the main section and then adds
+  the computer's card table, the draw and discard piles, and lastly the
+  user's cards table.
+*/
+function loadGameMain() {
+  $title.text("Crazy Kittens");
+
+  $link.text("Home").css('margin-left', '315px');
+
+  clearMain();
+  $main.addClass('main-game');
+
+  // we only want to set up the game and dispense the initial cards once
+  if(!Game.inPlay){
+    Game.setUpGame();
+  }
+  Game.inPlay++;
+
+  addCardSection("computer", Game.compsDeck);
+  addDrawDiscardPiles();
+  addCardSection("user", Game.usersDeck);
+}
+
+/*
+  Adds the basic html for the instructions 'page'
+*/
+function loadInstructionMain() {
+  $title.text("Welcome to Crazy Kittens");
+  $link.text("Home").css('margin-left', '657px');
+  // $link.text("Home").css('margin-left', '315px');
+
+  clearMain();
+  $main.addClass('main-index');
+
+  let $sectionSetUp = $('<section>').attr('id', 'setup');
+  let p1 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+
+  $sectionSetUp.append(p1);
+  let $sectionTurn = $('<section>').attr('id', 'turn');
+
+  let p2 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+  $sectionTurn.append(p2);
+
+  $main.append($sectionSetUp);
+  $main.append($sectionTurn);
+
+}
+
+
+
+/*
+  adds images for the given player
+*/
+function addCardSection(player, playerCards) {
+  if (player == "computer") {
+    // we need to display the cards facedown.
+    addImages("computer-section", "computer-table", playerCards, 0);
+
+  } else {
+    // we need to display the face value
+    addImages("user-section", "user-table", playerCards, 1);
+
   }
 }
+
+/*
+  For every card inside the playerCards array, we create an image and add it
+  to the provided section.
+*/
+function addImages(section, table, playerCards, player){
+  let $section = $('<section>');
+  let $div = $('<div>');
+
+  $(`#${section}`).remove();
+
+  $section.addClass('game-section').attr('id', `${section}`);
+  $div.attr('id', `${table}`);
+
+  for (let i = 0; i < playerCards.length; i++) {
+    let $img = $('<img>');
+    if(!player){
+      $img.attr('src', playerCards[i].down);
+    }else{
+      $img.attr('src', playerCards[i].face);
+    }
+      $img.attr('alt', playerCards[i].face)
+        .attr('title', "")
+        .data('data-action', playerCards[i].action);
+      $img.data('data-card-index', playerCards[i].id);
+
+      $img.data('data-player', player);
+
+    $img.on('click', function(){
+      onImageClick(playerCards, $(this));
+    });
+    $div.append($img);
+  }
+
+  $section.append($div);
+  if(!player){
+    $main.prepend($section);
+  }else{
+    $main.append($section);
+  }
+}
+
 /*
   Passes in the current player value
     If player == 1, then it means the user has lost
@@ -424,8 +397,114 @@ function buildGameOverScreen(user){
   let $div = $('<div>').append($img).append($p);
 
   $main.append($div);
-
 }
+
+function addGettingReadyToTradeDiv() {
+  if ($('#tradeDiv').length == 0) {
+    let tradeDiv = $('<div>').attr('id', 'tradeDiv');
+    let button = $('<button>').text("Cancel Move");
+
+    button.on('click', function() {
+      //need to cancel the regular action move and remove this div
+
+      // indicating that the user has not already selected a regular card for trade
+      activeCards = [];
+      Game.usersTradeCount = 0;
+      $gameNoteField.text("");
+      $('#tradeDiv').css('visibility', 'hidden');
+
+    });
+    let p = $('<p>').text("..getting ready to trade");
+    tradeDiv.append(button).append(p);
+    $('#drawPileDiv').append(tradeDiv);
+  } else {
+    $('#tradeDiv').css('visibility', '');
+  }
+}
+
+function addDrawDiscardPiles() {
+
+  let $mainDiv = $('<div>').attr('id', 'drawPileDiv').addClass('drawPile');
+  let $div = $('<div>').attr('id', 'game-status-instructions');
+
+  let $turn = null;
+  if(Game.turn){
+    $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
+  }else{
+    $turn = $('<p>').attr('id', 'game-turn').text("Turn: Computer");
+  }
+  let $step = $('<p>').attr('id', 'game-step').text("Select a card to play!");
+  $gameNoteField = $('<p>').attr('id', 'game-note').text("");
+
+  $div.append($turn).append($step).append($gameNoteField);
+
+  let $section = $('<section>');
+  $section.addClass('game-section').attr('id', 'draw-discard');
+
+  let $drawImg = $('<img>').attr('src', 'images/draw_back.png')
+    .attr('alt', "")
+    .attr('title', "")
+    .attr('id', 'draw-pile');
+
+    $drawImg.data('data-player', 2);
+
+  $drawImg.on('click', function(){
+
+    onImageClick(Game.drawPile, $(this));
+
+  });
+  $section.append($drawImg);
+
+
+  if(!Game.discardPile.length){
+    let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
+      .attr('alt', "")
+      .attr('title', "")
+      .attr('id', 'discard-pile');
+      $section.append($discardImg);
+  }else{
+    let $discardImg = $('<img>').attr('src', Game.discardPile[Game.discardPile.length-1].face)
+      .attr('alt', "")
+      .attr('title', "")
+      .attr('id', 'discard-pile');
+      $section.append($discardImg);
+  }
+
+  $mainDiv.append($div);
+  $mainDiv.append($section);
+  $main.append($mainDiv);
+
+  addGettingReadyToTradeDiv();
+  $('#tradeDiv').css('visibility', 'hidden');
+}
+
+///////////////////////////////////////////////// Utlity Section //////////////////////////////////////////////////////
+/*
+Returns the index of the first defuse card
+If none was found, we return -1;
+*/
+function findIndexOfOurDefuse(deck){
+  let index = -1;
+  for(let i = 0; i < deck.length; i++){
+    if(deck[i].action == "defuse"){
+      index = i;
+      break;
+    }
+  }
+
+  return index;
+}
+
+
+function haveEnoughCardsToPlay(playersDeck){
+  if(players.length > 1){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+
 /*
   We get here if we just drew a Crazy Kitten from the Draw Pile.
 
@@ -471,19 +550,46 @@ function lookForDefuseCard(playersDeck, player){
   }
 }
 
-
-
 function getIndexOfCardInDeck(card, deck){
   let index = null;
-
   for(let i = 0; i < deck.length; i++){
     if(card.face == deck[i].face && card.id == deck[i].id){
       index = i;
     }
   }
-
   return index;
 }
+
+function findCardInDeck(face, id, deck){
+  let card = {};
+  for(let i = 0; i < deck.length; i++){
+    if(deck[i].face == face && deck[i].id == id ){
+      card.action = deck[i].action;
+      card.face = deck[i].face;
+      card.down = deck[i].down;
+      card.id = deck[i].id;
+    }
+  }
+  return card;
+}
+
+/*
+  Returns true if the two cards are equal, false otherwise
+*/
+function areCardsEqual(cardOne, cardTwo){
+  let equal = true;
+  for(let key in cardOne){
+    if (cardOne.hasOwnProperty(key)) {
+      if(cardOne[key] != cardTwo[key]){
+        equal = false;
+        return equal;
+      }
+  }
+  }
+}
+
+
+////////////////////////////////////////// Computer Action Section /////////////////////////
 
 function performStepOne(noteField, $me, deck, cardOwner){
   if(cardOwner != Turn.player){
@@ -557,6 +663,27 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
   gameStepField.text("Draw a card from the Draw Pile");
 }
 
+/*
+  This function determines which of the user's cards the computer is about to
+  steal. Since we're immitating the actual clicking of an image, we're calling
+  the .click() on the selected image
+*/
+function computerPickCardToBeStolen(){
+  // represents the user's card the computer is about to steal
+  let rand = (Math.floor(Math.random()*((Game.usersDeck.length-1))-0+1)+0) +1;
+
+  let stolenCard = $(`#user-table img:nth-of-type(${rand})`);
+  console.log("rand: ", rand);
+  console.log("computer has picked the following card to be stolen: ", stolenCard);
+  console.log(stolenCard.data());
+
+  stolenCard.click();
+}
+
+/*
+  This function provides the logic for the computer to draw a card from the draw
+  pile
+*/
 function makeComputerDrawFromDrawPile(playerCards, gameTurnField, gameStepField){
   console.log("Comp cards: ", Game.compsDeck);
   console.log("Computer is drawing from draw pile.");
@@ -633,18 +760,7 @@ function determineIfPlayerNeedsToFinishTurnByDrawing(user, playersDeck, stepFiel
   }
 }
 
-function findCardInDeck(face, id, deck){
-  let card = {};
-  for(let i = 0; i < deck.length; i++){
-    if(deck[i].face == face && deck[i].id == id ){
-      card.action = deck[i].action;
-      card.face = deck[i].face;
-      card.down = deck[i].down;
-      card.id = deck[i].id;
-    }
-  }
-  return card;
-}
+
 
 /*
   Chooses and activates the computer's first card
@@ -694,82 +810,7 @@ function moveCardFromDeckIntoDiscardPile(deck, activeCards){
   }
 }
 
-function addGettingReadyToTradeDiv() {
-  if ($('#tradeDiv').length == 0) {
-    let tradeDiv = $('<div>').attr('id', 'tradeDiv');
-    let button = $('<button>').text("Cancel Move");
-
-    button.on('click', function() {
-      //need to cancel the regular action move and remove this div
-
-      // indicating that the user has not already selected a regular card for trade
-      activeCards = [];
-      Game.usersTradeCount = 0;
-      $gameNoteField.text("");
-      $('#tradeDiv').css('visibility', 'hidden');
-
-    });
-    let p = $('<p>').text("..getting ready to trade");
-    tradeDiv.append(button).append(p);
-    $('#drawPileDiv').append(tradeDiv);
-  } else {
-    $('#tradeDiv').css('visibility', '');
-  }
-
-}
-
-function addDrawDiscardPiles() {
-
-  let $mainDiv = $('<div>').attr('id', 'drawPileDiv').addClass('drawPile');
-  let $div = $('<div>').attr('id', 'game-status-instructions');
-
-  let $turn = null;
-  if(Game.turn){
-    $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
-  }else{
-    $turn = $('<p>').attr('id', 'game-turn').text("Turn: Computer");
-  }
-  let $step = $('<p>').attr('id', 'game-step').text("Select a card to play!");
-  $gameNoteField = $('<p>').attr('id', 'game-note').text("");
-
-  $div.append($turn).append($step).append($gameNoteField);
-
-  let $section = $('<section>');
-  $section.addClass('game-section').attr('id', 'draw-discard');
-
-  let $drawImg = $('<img>').attr('src', 'images/draw_back.png')
-    .attr('alt', "")
-    .attr('title', "")
-    .attr('id', 'draw-pile');
-
-    $drawImg.data('data-player', 2);
-
-  $drawImg.on('click', function(){
-    onImageClick(Game.drawPile, $(this));
-  });
-  $section.append($drawImg);
 
 
-  if(!Game.discardPile.length){
-    let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
-      .attr('alt', "")
-      .attr('title', "")
-      .attr('id', 'discard-pile');
-      $section.append($discardImg);
-  }else{
-    let $discardImg = $('<img>').attr('src', Game.discardPile[Game.discardPile.length-1].face)
-      .attr('alt', "")
-      .attr('title', "")
-      .attr('id', 'discard-pile');
-      $section.append($discardImg);
-  }
-
-  $mainDiv.append($div);
-  $mainDiv.append($section);
-  $main.append($mainDiv);
-
-  addGettingReadyToTradeDiv();
-  $('#tradeDiv').css('visibility', 'hidden');
-}
-
+// loads the index page into our main div
 loadIndexMain();
