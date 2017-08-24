@@ -97,7 +97,7 @@ $modalSubmit.on('click', function() {
     } else {
       console.log('modal submit: EROOOOOOOOORRRR');
       console.log(activeCards);
-      alert("card: ", activeCards[0].action );
+      alert("Error, in modal submit. card: ", activeCards[0].action );
     }
 
 
@@ -447,7 +447,7 @@ function lookForDefuseCard(playersDeck, player){
   if(defuseIndex > -1){
 
     if(player){
-      alert("You're luckyyy, you had a defuse card.");
+      alert("You're lucky, you had a defuse card.");
       // removes the used defuse card from our deck;
       playersDeck.splice(defuseIndex, 1);
       addCardSection("player", playersDeck);
@@ -608,7 +608,7 @@ function makeComputerDrawFromDrawPile(playerCards, gameTurnField, gameStepField)
 
 function determineIfPlayerNeedsToFinishTurnByDrawing(user, playersDeck, stepField, turnField){
 
-  alert("detrmining if player needs to finish turn by drawing");
+  // alert("determining if player needs to finish turn by drawing");
 
   if(playersDeck.length < 2){
     Turn.step = 3;
