@@ -302,7 +302,7 @@ function onImageClick(playerCards, $me){
 
     }else if(Turn.step == 1 || Turn.step == 3){
       // need to draw from draw pile
-      if(cardOwner == 2){
+      if(cardOwner != 2){
         $gameNoteField.text("You must draw from the draw pile!");
         return;
       }
@@ -366,13 +366,12 @@ function onImageClick(playerCards, $me){
 
     }else if(Turn.step == 2){
       performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, Game.usersDeck, Game.compsDeck);
-    }else if(Turn.step == 3){
-      console.log("User is only allowed to draw a new card this turn.");
     }
 
 
     // this means it's the computer's turn
   }else{
+
 
     if(Turn.step == 0){
 
@@ -509,17 +508,28 @@ function performStepOne(noteField, $me, deck, cardOwner){
     $('#modal-instructions').text(action);
   }
 
+  $modalSubmit.removeClass('computers-button');
+
+
   $modal.modal('show');
+
+  if(Turn.player == 0){
+    setTimeout(function(){
+      $modalSubmit.addClass('computers-button');
+    }, 1000);
+  }
 }
 
 // here the player is stealing a card
 function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, opponentsDeck){
-  if(cardOwner == Turn.player){
+  if(cardOwner == Turn.player || cardOwner == 2){
     $gameNoteField.text("You must steal from your opponent");
     return;
   }
 
   let id = $me.data('data-card-index');
+  console.log("In performStepTwo, id:", id);
+
   // remove the 2 traded cards from your deck
   moveCardFromDeckIntoDiscardPile(ourDeck, activeCards);
 
@@ -731,6 +741,8 @@ function addDrawDiscardPiles() {
     .attr('alt', "")
     .attr('title', "")
     .attr('id', 'draw-pile');
+
+    $drawImg.data('data-player', 2);
 
   $drawImg.on('click', function(){
     onImageClick(Game.drawPile, $(this));
