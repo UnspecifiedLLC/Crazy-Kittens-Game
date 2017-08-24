@@ -86,7 +86,7 @@ $modalSubmit.on('click', function() {
         }
 
     //the computer's turn
-  } else {
+  }else{
         if(activeCards.length == 1){
           // if the computer has only selected one card so far, the computer needs
           // to select another card before the computer can perform the action
@@ -216,14 +216,6 @@ function onImageClick(playerCards, $me){
     }
   }
 }
-
-
-
-
-
-
-
-
 
 /*
   Removes the html content from the main section
@@ -377,6 +369,7 @@ function addImages(section, table, playerCards, player){
 }
 
 /*
+  Creates the
   Passes in the current player value
     If player == 1, then it means the user has lost
     If player == 0, then it means the user has won
@@ -399,6 +392,9 @@ function buildGameOverScreen(user){
   $main.append($div);
 }
 
+/*
+  This div with its button will allow the user to cancel their card/action submission
+*/
 function addGettingReadyToTradeDiv() {
   if ($('#tradeDiv').length == 0) {
     let tradeDiv = $('<div>').attr('id', 'tradeDiv');
@@ -422,12 +418,18 @@ function addGettingReadyToTradeDiv() {
   }
 }
 
+/*
+  Adds the Draw Pile and Discard Pile images to our game-main.
+  Also adds the click-listeners for the Draw Pile images
+*/
 function addDrawDiscardPiles() {
 
   let $mainDiv = $('<div>').attr('id', 'drawPileDiv').addClass('drawPile');
   let $div = $('<div>').attr('id', 'game-status-instructions');
 
   let $turn = null;
+
+
   if(Game.turn){
     $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
   }else{
@@ -449,13 +451,13 @@ function addDrawDiscardPiles() {
     $drawImg.data('data-player', 2);
 
   $drawImg.on('click', function(){
-
     onImageClick(Game.drawPile, $(this));
 
   });
   $section.append($drawImg);
 
 
+  // If the discard pile doesn't already have cards, we recreate it
   if(!Game.discardPile.length){
     let $discardImg = $('<img>').attr('src', 'images/discard_back.png')
       .attr('alt', "")
@@ -474,6 +476,7 @@ function addDrawDiscardPiles() {
   $mainDiv.append($section);
   $main.append($mainDiv);
 
+  // adds placeholder so that page formatting is not messed up
   addGettingReadyToTradeDiv();
   $('#tradeDiv').css('visibility', 'hidden');
 }
@@ -503,7 +506,6 @@ function haveEnoughCardsToPlay(playersDeck){
     return false;
   }
 }
-
 
 /*
   We get here if we just drew a Crazy Kitten from the Draw Pile.
@@ -647,6 +649,10 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
 
   let indOfCardToBeRemoved = getIndexOfCardInDeck(cardToBeRemoved, opponentsDeck);
   // remove the card from the computer's deck
+
+  if(indOfCardToBeRemoved < 0){
+   console.log("%%%%%%%%%%%%%%%%%   couldn't find the card: ", cardToBeRemoved);
+  }
   opponentsDeck.splice(indOfCardToBeRemoved, 1);
 
   if(Turn.player){
@@ -670,6 +676,10 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
 */
 function computerPickCardToBeStolen(){
   // represents the user's card the computer is about to steal
+  if(Game.usersDeck.length < 1){
+    buildGameOverScreen(0);
+    return;
+  }
   let rand = (Math.floor(Math.random()*((Game.usersDeck.length-1))-0+1)+0) +1;
 
   let stolenCard = $(`#user-table img:nth-of-type(${rand})`);
@@ -751,6 +761,7 @@ function determineIfPlayerNeedsToFinishTurnByDrawing(user, playersDeck, stepFiel
   }else{
     turnField.text('Turn: Computer');
     Turn.player = 0;
+
 
     if(playersDeck.length < 2){
       setTimeout(function(){
