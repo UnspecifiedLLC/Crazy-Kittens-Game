@@ -13,6 +13,48 @@
   align-content: space-between;
 }
 
+.main-game-over{
+  width: 100vw;
+  height: 70%;
+
+
+  background-color: #ECECEC;
+
+  font-family: 'Architects Daughter', cursive;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.main-game-over div{
+  margin: 0 auto;
+  width: 500px;
+}
+
+.main-game-over img, .main-game-over p{
+  display: inline-block;
+}
+
+.main-game-over p{
+  text-align: center;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
+  font-size: 4em;
+  height: 140px;
+}
+
+.lose{
+  background-color: tomato;
+}
+
+.win{
+  background-color: green;
+}
+
 .game-section {
   margin: 0 auto;
 }

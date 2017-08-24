@@ -127,7 +127,7 @@ let Game = (function(){
         this.drawPile.push(this.regularDeck[i]);
       }
 
-      drawPile will have (38+x) 48 cards in total
+      // drawPile will have (38+x) 48 cards in total
       for(let i = 0; i < 10; i++){
         this.drawPile.push(this.crazyKittensDeck[0]);
       }
