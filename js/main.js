@@ -20,16 +20,11 @@ $link.on('click', function() {
 let $modal = $('#modal');
 let activeCards = [];
 
-// $modal.on('shown.bs.modal', function(event){
-//
-// });
-
 let $modalCancel = $('#modal-cancel');
 $modalCancel.on('click', function() {
 
-  if (Game.turn) {
+  if (Turn.player) {
     // it's the user's turn
-
     let activeCard = activeCards.pop();
     if (activeCard.action == "regular" && Game.usersTradeCount == 0) {
       $('#tradeDiv').css('visibility', 'hidden');
@@ -60,14 +55,13 @@ function areCardsEqual(cardOne, cardTwo){
 
 $modalSubmit.on('click', function() {
   if (Turn.player) {
-  // if (Game.turn) {
     // it's the user's turn
 
-    // if we submitted a regular card AND it is already the second card
-    if (activeCards[0].action == "regular" && Game.usersTradeCount == 1) {
+    // if we submitted a regular card or a defuse card AND it is already the second card
+    if ((activeCards[0].action == "regular" || activeCards[0].action == "defuse") && Game.usersTradeCount == 1) {
       // now we're allowed to take a card from the computer
 
-      if ( !areCardsEqual(activeCards[0], activeCards[1])) {
+      if ( !areCardsEqual(activeCards[0], activeCards[1]) ) {
         Game.usersTradeCount = 0;
         console.log('Getting ready to steal!');
         $('#game-step').text("Steal one of your opponent's cards");
@@ -91,7 +85,7 @@ $modalSubmit.on('click', function() {
       //need to remove the two regular cards from the user's deck
 
 
-    } else if (activeCards[0].action == "regular" && Game.usersTradeCount != 1) {
+    } else if ( (activeCards[0].action == "regular" || activeCards[0].action == "defuse")  && Game.usersTradeCount != 1) {
       // we need to wait for a second regular card to be selected before we can
       // steal a card from the computer
       Game.usersTradeCount = 1;
@@ -104,19 +98,17 @@ $modalSubmit.on('click', function() {
       console.log('modal submit: EROOOOOOOOORRRR');
       console.log(activeCards);
       alert("card: ", activeCards[0].action );
-      debugger;
-
     }
 
-  } else {
+
     //the computer's turn
+  } else {
     if(activeCards.length == 1){
       // debugger;
 
       startComputersTurn(1);
     }else{
       Game.usersTradeCount = 0;
-      console.log('Getting ready to steal!');
       $('#game-step').text("Steal one of your opponent's cards");
 
       Turn.step = 2;
@@ -126,23 +118,23 @@ $modalSubmit.on('click', function() {
 
 
       setTimeout(function(){
-
-        computerStealCardFromUser();
+        console.log("Computer is about to call computerPickCardToBeStolen");
+        computerPickCardToBeStolen();
       }, 2000);
     }
   }
 
 });
 
-function computerStealCardFromUser(){
-  console.log("Computer is about to steal a card!");
+function computerPickCardToBeStolen(){
+  console.log("Computer is about to pick the card it wants to steal");
 
   // represents the user's card the computer is about to steal
   let rand = (Math.floor(Math.random()*((Game.usersDeck.length-1))-0+1)+0) +1;
 
   let stolenCard = $(`#user-table img:nth-of-type(${rand})`);
   console.log("rand: ", rand);
-  console.log(stolenCard);
+  console.log("computer has picked the following card to be stolen: ", stolenCard);
   console.log(stolenCard.data());
 
   stolenCard.click();
@@ -308,7 +300,7 @@ function onImageClick(playerCards, $me){
     if(Turn.step == 0){
       performStepOne($gameNoteField, $me, Game.usersDeck, cardOwner);
 
-    }else if(Turn.step == 1){
+    }else if(Turn.step == 1 || Turn.step == 3){
       // need to draw from draw pile
       if(cardOwner == 2){
         $gameNoteField.text("You must draw from the draw pile!");
@@ -324,21 +316,26 @@ function onImageClick(playerCards, $me){
 
         if(hadADefuse){
           // we're still in the game
+          if(Game.compsDeck.length < 2){
+            /*
+              The user's turn is about to start: if the user has less than 2 cards,
+              the user can only draw a card during their turn
+            */
+            determineIfPlayerNeedsToFinishTurnByDrawing(Turn.player, Game.compsDeck, gameStepField, gameTurnField);
+          }else{
+            //trigger computer's turn
+            gameTurnField.text('Turn: Computer');
+            gameStepField.text('Select one of your own cards, computer');
 
-          gameTurnField.text('Turn: Computer');
-          gameStepField.text('Select one of your own cards, computer');
-
-          // indicating that it is the computer's turn
-          Turn.step = 0;
-          Turn.player = 0;
-
-          //trigger computer's turn
-          startComputersTurn(0);
+            // indicating that it is the computer's turn
+            Turn.step = 0;
+            Turn.player = 0;
+            startComputersTurn(0);
+          }
 
         }else{
           // we've lost
           buildGameOverScreen(Turn.player);
-
         }
       }else{
         // the new card was not a Crazy Kitten
@@ -348,27 +345,38 @@ function onImageClick(playerCards, $me){
 
         addCardSection("player", Game.usersDeck);
 
-        gameTurnField.text('Turn: Computer');
-        gameStepField.text('Select one of your own cards, computer');
+        if(Game.compsDeck.length < 2){
+          /*
+            The user's turn is about to start: if the user has less than 2 cards,
+            the user can only draw a card during their turn
+          */
+          determineIfPlayerNeedsToFinishTurnByDrawing(Turn.player, Game.compsDeck, gameStepField, gameTurnField);
+        }else{
+          gameTurnField.text('Turn: Computer');
+          gameStepField.text('Select one of your own cards, computer');
 
-        // indicating that it is the computer's turn
-        Turn.step = 0;
-        Turn.player = 0;
+          // indicating that it is the computer's turn
+          Turn.step = 0;
+          Turn.player = 0;
 
-        //trigger computer's turn
-        startComputersTurn(0);
-
+          //trigger computer's turn
+          startComputersTurn(0);
+        }
       }
 
     }else if(Turn.step == 2){
       performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, Game.usersDeck, Game.compsDeck);
+    }else if(Turn.step == 3){
+      console.log("User is only allowed to draw a new card this turn.");
     }
+
 
     // this means it's the computer's turn
   }else{
 
-
     if(Turn.step == 0){
+
+      // loads the clicked card into the modal and adds the chosen to activeCards
       performStepOne($gameNoteField, $me, Game.compsDeck, cardOwner);
 
       setTimeout(function(){
@@ -378,7 +386,7 @@ function onImageClick(playerCards, $me){
       // computer is about to steal the user's card
     }else if(Turn.step == 2){
 
-      console.log("Need to add the steal logic to remove the card from the user's deck");
+      console.log("The computer is about to call performStepTwo");
       performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, Game.compsDeck, Game.usersDeck);
 
       setTimeout(function(){
@@ -389,6 +397,13 @@ function onImageClick(playerCards, $me){
   }
 }
 
+function haveEnoughCardsToPlay(playersDeck){
+  if(players.length > 1){
+    return true;
+  }else{
+    return false;
+  }
+}
 /*
   Passes in the current player value
     If player == 1, then it means the user has lost
@@ -457,6 +472,8 @@ function lookForDefuseCard(playersDeck, player){
   }
 }
 
+
+
 function getIndexOfCardInDeck(card, deck){
   let index = null;
 
@@ -495,6 +512,7 @@ function performStepOne(noteField, $me, deck, cardOwner){
   $modal.modal('show');
 }
 
+// here the player is stealing a card
 function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, opponentsDeck){
   if(cardOwner == Turn.player){
     $gameNoteField.text("You must steal from your opponent");
@@ -506,13 +524,14 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
   moveCardFromDeckIntoDiscardPile(ourDeck, activeCards);
 
   // add the stolen card to your deck
-  // let cardToBeRemoved = Game.compsDeck[toBeRemoved];
   let face = $me.attr('alt');
   let cardToBeRemoved = findCardInDeck(face, id, opponentsDeck);
+  console.log("Trying to steal: ", cardToBeRemoved);
   ourDeck.push(cardToBeRemoved);
 
+  let indOfCardToBeRemoved = getIndexOfCardInDeck(cardToBeRemoved, opponentsDeck);
   // remove the card from the computer's deck
-  opponentsDeck.splice(id, 1);
+  opponentsDeck.splice(indOfCardToBeRemoved, 1);
 
   if(Turn.player){
     addCardSection("computer", opponentsDeck);
@@ -522,9 +541,7 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
     addCardSection("player", opponentsDeck);
   }
 
-
   activeCards = [];
-
 
   Turn.step = 1;
   gameStepField.text("Draw a card from the Draw Pile");
@@ -532,27 +549,34 @@ function performStepTwo(cardOwner, $gameNoteField, gameStepField, $me, ourDeck, 
 
 function makeComputerDrawFromDrawPile(playerCards, gameTurnField, gameStepField){
   console.log("Comp cards: ", Game.compsDeck);
-  console.log("COmputer is drawing from draw pile.");
+  console.log("Computer is drawing from draw pile.");
 
-  let newCard = playerCards.pop();
+  let temp = playerCards.pop();
+  let newCard = {
+    action: temp.action,
+    face: temp.face,
+    id: temp.id,
+    down: temp.down
+  };
+
   newCard.id = Game.compsDeck.length;
 
-  console.log("Computer drew: ", newCard);
+  console.log("Computer drew from drawPile: ", newCard);
 
   if(newCard.action == 'crazy'){
 
     // display crazy kitten and check if there's a defuse card
+    // if there's a defuse card, it will be removed from the compsDeck
     hadADefuse = lookForDefuseCard(Game.compsDeck, Turn.player);
 
     if(hadADefuse){
       // we're still in the game
 
-      gameTurnField.text('Turn: User');
-      gameStepField.text('Select one of your own cards');
-
-      // indicating that it is the computer's turn
-      Turn.step = 0;
-      Turn.player = 1;
+      /*
+        The user's turn is about to start: if the user has less than 2 cards,
+        the user can only draw a card during their turn
+      */
+      determineIfPlayerNeedsToFinishTurnByDrawing(Turn.player, Game.usersDeck, gameStepField, gameTurnField);
 
       return;
     }else{
@@ -565,12 +589,38 @@ function makeComputerDrawFromDrawPile(playerCards, gameTurnField, gameStepField)
   Game.compsDeck.push(newCard);
   addCardSection("computer", Game.compsDeck);
 
+  /*
+    The user's turn is about to start: if the user has less than 2 cards,
+    the user can only draw a card during their turn
+  */
+  determineIfPlayerNeedsToFinishTurnByDrawing(Turn.player, Game.usersDeck, gameStepField, gameTurnField);
+}
 
-  gameTurnField.text('Turn: User');
-  gameStepField.text('Select one of your own cards, user');
+function determineIfPlayerNeedsToFinishTurnByDrawing(user, playersDeck, stepField, turnField){
 
-  Turn.step = 0;
-  Turn.player = 1;
+  alert("detrmining if player needs to finish turn by drawing");
+
+  if(playersDeck.length < 2){
+    Turn.step = 3;
+    stepField.text('Because you only have one card, you can only draw from the Draw Pile this turn.');
+  }else{
+    Turn.step = 0;
+    stepField.text('Select one of your own cards');
+  }
+
+  if(!user){
+    turnField.text('Turn: User');
+    Turn.player = 1;
+  }else{
+    turnField.text('Turn: Computer');
+    Turn.player = 0;
+
+    if(playersDeck.length < 2){
+      setTimeout(function(){
+        makeComputerDrawFromDrawPile(Game.drawPile, turnField, stepField);
+      }, 2000);
+    }
+  }
 }
 
 function findCardInDeck(face, id, deck){
@@ -599,7 +649,6 @@ function startComputersTurn(ind){
     let image = null;
     $.each(images, function(index, value){
       if($(this).data().dataCardIndex == card.id && $(this).attr('alt') == card.face){
-        console.log("found the card: ", $(this));
         image = $(this);
       }
     });
