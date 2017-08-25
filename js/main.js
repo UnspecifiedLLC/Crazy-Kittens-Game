@@ -297,13 +297,15 @@ function loadInstructionMain() {
   $main.addClass('main-index');
 
   let $sectionSetUp = $('<section>').attr('id', 'setup');
-  let p1 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+  let h2 = $('<h2>').text("Setup");
+  let p1 = $('<p>').text("At the beginning of the game, every player receives a total of 5 cards: 4 action cards and 1 defuse card. The Crazy Kitten cards and the remaining cards are going to be shuffled to create the Draw Pile. So the only way for a player to get a Crazy Kitten is by drawing it from the Draw Pile.");
 
-  $sectionSetUp.append(p1);
+  $sectionSetUp.append(h2).append(p1);
   let $sectionTurn = $('<section>').attr('id', 'turn');
+  let turnH2 = $('<h2>').text("Turn");
 
-  let p2 = $('<p>').text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-  $sectionTurn.append(p2);
+  let p2 = $('<p>').text("Every turn consists of 2 phases: During the first phase the player chooses which card to play from their hand. After the player has played from their hand, the player places the played cards onto the Discard Pile and finishes their turn by drawing one card from the Draw Pile which concludes the second phase of their turn.");
+  $sectionTurn.append(turnH2).append(p2);
 
   $main.append($sectionSetUp);
   $main.append($sectionTurn);
