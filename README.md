@@ -26,7 +26,7 @@ that.
 
 ## Crazy-Kittens - The Rules
 
-In the beginning of the game, every player receives a total of 5 cards: 4 action
+At the beginning of the game, every player receives a total of 5 cards: 4 action
 cards and 1 defuse card. The Crazy Kitten cards and the remaining cards are
 going to be shuffled to create the Draw Pile. So the only way for a player to
 get a Crazy Kitten is by drawing it from the Draw Pile.
