@@ -9,6 +9,23 @@ throughout the entire process to version control my web game.
 ## User Stories in Trello
 [Trello](https://trello.com/b/TVMcydaw/crazy-kittens)
 
+## Docker 
+
+### Build
+```
+docker build .
+```
+
+### Run
+```
+docker run -it -p 8080:8080 [container hash from previous step]
+```
+```
+Starting up http-server, serving .
+Available on:
+  http://127.0.0.1:8080
+  http://172.17.0.2:8080
+```
 
 ## Crazy-Kittens - The Game
 
