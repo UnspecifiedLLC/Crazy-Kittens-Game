@@ -1,0 +1,26 @@
+version: '3'
+services:
+  kittens:
+    build: ../..
+    ports:
+     - "8080:8080"
+  selenium-chrome: 
+    image: "selenium/standalone-chrome"
+    ports:
+      - 4444:4444
+    # volumes: 
+    #   - "/dev/shm:/dev/shm"
+  test:
+# docker run -it --rm --name my-maven-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn clean test    
+    image: "maven:3.3-jdk-8"
+    volumes:
+      - ./:/usr/src/mymaven
+    working_dir: /usr/src/mymaven
+    command: mvn clean test
+
+# volumes: 
+  # mymaven:
+
+#  redis:
+#    image: "redis:alpine"
+

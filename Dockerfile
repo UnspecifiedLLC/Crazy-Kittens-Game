@@ -4,4 +4,4 @@ WORKDIR /src
 COPY . /src
 RUN npm install -g http-server
 
-CMD http-server .
+CMD ["http-server", "."]
