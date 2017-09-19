@@ -28,3 +28,10 @@ A container instance that will run Maven targets is started, allowed to copmlete
 the pom.xml file. 
 
 ### Viewing Results
+Results from the last test run are put into `/target/surefire-reports`. 
+
+## Issues
+   * External page scenario results bundled up with the cukes demo example
+   * Missing tests against kittens
+   * Separate docker-compose commands for starting the 'persistent' containers (kittens, selenium) and running tests
+
