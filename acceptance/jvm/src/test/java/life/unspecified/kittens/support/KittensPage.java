@@ -14,39 +14,68 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-public class KittensPage {
+public abstract class KittensPage {
+
+    public static String WELCOME_MSG = "Welcome to Crazy Kittens";
 
     private RemoteWebDriver driver;
-    
-    public KittensPage(RemoteWebDriver driver) {
+    private KittensHome kittensHome;
+    private KittensInstructions kittensInstructions;
+    private KittensGame kittensGame;
+
+    protected KittensPage(RemoteWebDriver driver) {
         this.driver = driver;
     }
 
-    public void reset() {
-        this.driver.navigate().refresh();
+    public KittensHome reset() {
+        getDriver().navigate().refresh();
+        return getKittensHome();
+    }   
+
+    public WebElement getElementById(String id) { 
+         return getDriver().findElementById(id);
     }
 
     public WebElement getTitle() {
-        return this.driver.findElementById("title");
+        return getDriver().findElementById("title");
     }
 
     public WebElement getTitleLink() {
-        return this.driver.findElementById("title-link");
+        return getDriver().findElementById("title-link");
     }
 
-    public boolean isInstructions() {
-        assertThat(getTitle().getText(), is(equalTo("Welcome To Crazy Kittens")));
-        assertThat(getTitleLink().getText(), is(equalTo("Home")));
+    public WebElement getOriginalGameLink() {
+        return getDriver().findElementByXPath("body/footer/div[@class='original']/a");
     }
 
-    public boolean isHome() {
-        assertThat(getTitle().getText(), is(equalTo("Welcome To Crazy Kittens")));
-        assertThat(getTitleLink().getText(), is(equalTo("Instructions")));
-    }          
+    public void clickOriginalGameLink() {
+        getOriginalGameLink().click();
+        throw new RuntimeException("Edge of testing scope. Look into appropriate behavior for non-app pages");
+    }
 
-    public boolean isGameStarted() {
-        assertThat(getTitle().getText(), is(equalTo("Crazy Kittens")));
-        assertThat(getTitleLink().getText(), is(equalTo("Home")));
+    public abstract boolean isValidState();
+    public abstract void assertIsValidState();
+
+    protected RemoteWebDriver getDriver() {
+        return driver;
+    }
+
+    protected KittensHome getKittensHome() {
+        if (this.kittensHome == null) 
+            this.kittensHome = new KittensHome(getDriver());
+        return this.kittensHome;
+    }
+
+    protected KittensInstructions getKittensInstructions() {
+        if (this.kittensInstructions == null) 
+            this.kittensInstructions = new KittensInstructions(getDriver());
+        return this.kittensInstructions;
+    }
+
+    protected KittensGame getKittensGame() {
+        if (this.kittensGame == null) 
+            this.kittensGame = new KittensGame(getDriver());
+        return this.kittensGame;
     }
 
 }

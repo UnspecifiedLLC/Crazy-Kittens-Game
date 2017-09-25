@@ -3,6 +3,6 @@ package se.thinkcode.itake;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-@RunWith(Cucumber.class)
+// @RunWith(Cucumber.class)
 public class RunCukesTest {
 }
