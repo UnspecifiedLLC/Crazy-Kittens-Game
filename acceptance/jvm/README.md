@@ -8,30 +8,36 @@ Cucumber
 ## Setup
 Install docker https://docs.docker.com/engine/installation/.
 
-## Run Tests
-Open a terminal session. Navigate to the JVM acceptance test directory (/Crazy-Kittens-Game/acceptance/jvm). It should 
-contain a `docker-compose.yml` file. Run:
+## Start the application and the Selenium server
+Open a terminal session. Navigate to the JVM acceptance test directory (/Crazy-Kittens-Game/acceptance/jvm). Run:
 
-`docker-compose up`
+`docker-compose -f kittens-compose.yml up`
 
-## Crazy Kittens
+This will start two containers: 
+
+### Crazy Kittens
 Crazy Kittens should be running locally in a docker container. It's a web application, you should be able to inspect it 
 at http://localhost:8080/
 
-## Selenium Standalone
+### Selenium Standalone
 There should be a Selenium standalone instance also running locaally. Selenium standalone provides a web browser (in this case,
 Chrome) that our test implementation can use to interact with Crazy Kittens. You can access the console at 
 http://localhost:4444/wd/hub
 
-## Tests
-A container instance that will run Maven targets is started, allowed to copmlete, and then dies. The targets are defined in 
-the pom.xml file. 
+This terminal session will now show the output of the Selenium server. When you're ready to stop, use ctrl-c to kill the process.
+
+## Run Tests
+Open a terminal session. Navigate to the JVM acceptance test directory (/Crazy-Kittens-Game/acceptance/jvm). Run:
+
+`docker-compose up`
+
+A transient container instance that will run Maven targets will be started. It will run tests (via Maven targets defined in 
+the pom.xml file).  
 
 ### Viewing Results
-Results from the last test run are put into `/target/surefire-reports`. 
+Results from the last test run are put into `/Crazy-Kittens-Game/acceptance/jvm/target/surefire-reports`. 
 
 ## Issues
-   * External page scenario results bundled up with the cukes demo example
-   * Missing tests against kittens
-   * Separate docker-compose commands for starting the 'persistent' containers (kittens, selenium) and running tests
+  * some crufty example code should be cleaned out 
+  * could use more tests of the actual gameplay, development of the KittensPage class
 
