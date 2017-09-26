@@ -1,12 +1,17 @@
 # Cucumber and Selenium acceptance testing
 
 ## Technologies Used
+Git
 Docker
 Maven 
 Cucumber
 
 ## Setup
-Install docker https://docs.docker.com/engine/installation/.
+  * Install a Git client.
+  * Install docker https://docs.docker.com/engine/installation/.
+  * Check out the Crazy-Kittens-Game project:<br/>
+  `git clone git@github.com:UnspecifiedLLC/Crazy-Kittens-Game.git`
+  * Switch to branch acc-test-framework
 
 ## Start the application and the Selenium server
 Open a terminal session. Navigate to the JVM acceptance test directory (/Crazy-Kittens-Game/acceptance/jvm). Run:
@@ -40,4 +45,5 @@ Results from the last test run are put into `/Crazy-Kittens-Game/acceptance/jvm/
 ## Issues
   * some crufty example code should be cleaned out 
   * could use more tests of the actual gameplay, development of the KittensPage class
+  * Acceptance test impl is on a branch, not master; do we want to use branches to implement the 'choices' in the adventure?
 
