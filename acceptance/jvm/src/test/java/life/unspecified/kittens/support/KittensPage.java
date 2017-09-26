@@ -1,21 +1,13 @@
 package life.unspecified.kittens.support;
 
-import cucumber.api.java.en.*;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.support.ui.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
- 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public abstract class KittensPage {
 
+//	public static String KITTENS_URL = "http://localhost:8080";
+//	public static String KITTENS_URL = "http://jvm_selenium-chrome_1:8080";
+	public static String KITTENS_URL = "http://kittens:8080";
     public static String WELCOME_MSG = "Welcome to Crazy Kittens";
 
     private RemoteWebDriver driver;
@@ -28,8 +20,8 @@ public abstract class KittensPage {
     }
 
     public KittensHome reset() {
-        getDriver().navigate().refresh();
-        return getKittensHome();
+        getDriver().navigate().to(KITTENS_URL);
+        return asKittensHome();
     }   
 
     public WebElement getElementById(String id) { 
@@ -60,19 +52,19 @@ public abstract class KittensPage {
         return driver;
     }
 
-    protected KittensHome getKittensHome() {
+    public KittensHome asKittensHome() {
         if (this.kittensHome == null) 
             this.kittensHome = new KittensHome(getDriver());
         return this.kittensHome;
     }
 
-    protected KittensInstructions getKittensInstructions() {
+    public KittensInstructions asKittensInstructions() {
         if (this.kittensInstructions == null) 
             this.kittensInstructions = new KittensInstructions(getDriver());
         return this.kittensInstructions;
     }
 
-    protected KittensGame getKittensGame() {
+    public KittensGame asKittensGame() {
         if (this.kittensGame == null) 
             this.kittensGame = new KittensGame(getDriver());
         return this.kittensGame;

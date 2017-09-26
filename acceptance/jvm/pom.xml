@@ -30,10 +30,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>se.thinkcode</groupId>
-    <artifactId>cucumber-itake-unconference-2014</artifactId>
+    <groupId>life.unspecified.kittens</groupId>
+    <artifactId>cucumber-unspecified-2017</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
     <name>mvn spike</name>
 
     <dependencies>

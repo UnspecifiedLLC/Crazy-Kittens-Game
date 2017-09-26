@@ -1,78 +1,89 @@
 package life.unspecified.kittens;
 
+import static org.junit.Assert.assertFalse;
+
+import org.openqa.selenium.remote.RemoteWebDriver;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.PendingException;
+import life.unspecified.kittens.support.KittensGame;
+import life.unspecified.kittens.support.KittensHome;
+import life.unspecified.kittens.support.KittensInstructions;
+import life.unspecified.kittens.support.KittensPage;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.support.ui.*;
+public class NavigationStepDefinitions {
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
- 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+    private RemoteWebDriver driver = StepSetupHooks.getDriver();
+    private KittensPage kittensPage = new KittensHome(driver);
 
-public class StepDefinitions {
+    //@Given("^I am on the home page$") 
+    @Then("^I am on the home page$")
+    public void i_am_on_the_home_page() throws Throwable {
+        ((KittensHome)kittensPage).assertIsValidState();
+    }
 
-    private String url = null;
-    private static RemoteWebDriver driver = null;
+    @Given("^no game is started$")
+    public void no_game_is_started() throws Throwable {
+        assertFalse("A game is not in progress", ((KittensHome)kittensPage).isGameInProgress());
+    }
 
-    private static void setup() throws MalformedURLException {
-        if (driver == null) {
-            try {
-                DesiredCapabilities capability = DesiredCapabilities.chrome();
-                URL driverLocation = new URL("http://jvm_selenium-chrome_1:4444/wd/hub");
-                System.out.println(capability.toString());
-                System.out.println(driverLocation.toString());
-                
-                driver = new RemoteWebDriver(driverLocation, capability);
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-                driver.manage().window().setSize(new Dimension(1920, 1080));
-            } catch (Exception ex) {
-                teardown();
-            }
+    @When("^I click play$")
+    public void i_click_play() throws Throwable {
+        kittensPage = ((KittensHome)kittensPage).clickPlayButton();
+    }
+
+   // @Then("^a game should be started$")
+   // public void a_game_should_be_started() throws Throwable {
+   //   // Write code here that turns the phrase above into concrete actions
+   //     throw new PendingException();
+   // }
+
+    @Given("^I load crazy kittens$")
+    public void i_load_crazy_kittens() throws Throwable {
+        kittensPage = kittensPage.reset();
+    }
+
+    @Then("^I see a play button$")
+    public void i_see_a_play_button() throws Throwable {
+        ((KittensHome)kittensPage).assertPlayButtonVisible();
+    }
+
+    @When("^I click instructions$")
+    public void i_click_instructions() throws Throwable {
+        kittensPage = ((KittensHome)kittensPage).clickInstructions();
+    }
+
+    @Then("^I am on the instructions page$")
+    public void i_am_on_the_instructions_page() throws Throwable {
+        ((KittensInstructions)kittensPage).assertIsValidState();
+    }
+
+    @When("^I click home$")
+    public void i_click_home() throws Throwable {
+        if (kittensPage instanceof KittensGame) {
+            kittensPage = ((KittensGame)kittensPage).clickHome();
+        } else if (kittensPage instanceof KittensInstructions) {
+            kittensPage = ((KittensInstructions)kittensPage).clickHome();
+        } else {
+            throw new IllegalStateException("Not on a page with a home button");
         }
     }
 
-
-    private static void teardown() {
-        if (driver != null) {
-            try {
-                driver.quit();            
-            } finally {
-                driver = null;
-            }
-        }
+    @Then("^I am on the game page$")
+    public void i_am_on_the_game_page() throws Throwable {
+        ((KittensGame)kittensPage).assertIsValidState();
     }
 
-    @When("^I search for (.*)$")
-    public void i_search_for_kittens(String search_string) throws Throwable {
-        System.out.println("Searching for " + search_string);
-        WebElement element = driver.findElement(By.id("lst-ib"));
-        element.sendKeys(search_string);
-        element.submit();
+    @Then("^I see a continue button$")
+    public void i_see_a_continue_button() throws Throwable {
+        ((KittensHome)kittensPage).assertContinueButtonVisible();
     }
 
-    @Then("^I should see search results for (.*)$")
-    public void i_should_see_search_results_for_kittens(String search_string) throws Throwable {
-        System.out.println("Confirming search results for " + search_string);
-        // assertTrue(driver.getPageSource().contains(search_string));
-        teardown();
+    @When("^I click continue$")
+    public void i_click_continue() throws Throwable {
+        kittensPage = ((KittensHome)kittensPage).clickPlayButton();
     }
 
-    @When("^I open website (.*)$")
-    public void i_open_website(String url) throws Throwable {
-        setup();
-        this.url = url;   
-        driver.get(this.url);
-    }
 
 }

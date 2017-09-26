@@ -1,39 +1,33 @@
 package life.unspecified.kittens.support;
 
-import cucumber.api.java.en.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.support.ui.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class KittensGame extends KittensPage {
 
-    KittensGame(RemoteWebDriver driver) {
+    private static final String PLAYING_MSG = "Crazy Kittens";
+
+	KittensGame(RemoteWebDriver driver) {
         super(driver);
     }
 
     public boolean isValidState() {
         WebElement title = getTitle();
-        return title != null && title.getText().equals(WELCOME_MSG) && getMainGameSection() != null;
+        return title != null && title.getText().equals(PLAYING_MSG) && getMainGameSection() != null;
     }
 
     public void assertIsValidState() {
         WebElement title = getTitle();
         assertNotNull("Title element is present", title);
-        assertEquals("Title shows welcome message", WELCOME_MSG, title.getText());
+        assertEquals("Title shows welcome message", PLAYING_MSG, title.getText());
         assertNotNull("Main Game Section is present", getMainGameSection());
     }
 
     public WebElement getMainGameSection() {
-        return getDriver().findElementByXPath("body/main[@class='main-game']");
+        return getDriver().findElementByXPath("/html/body/main");
     }
 
     public WebElement getGameTurn() {
@@ -58,7 +52,7 @@ public class KittensGame extends KittensPage {
 
     public KittensHome clickHome() {
         getTitleLink().click();
-        return getKittensHome();
+        return asKittensHome();
     }    
 
 }

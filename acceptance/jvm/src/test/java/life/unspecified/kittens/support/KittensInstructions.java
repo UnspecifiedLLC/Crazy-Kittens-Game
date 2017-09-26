@@ -1,18 +1,10 @@
 package life.unspecified.kittens.support;
 
-import cucumber.api.java.en.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.support.ui.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
- 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class KittensInstructions extends KittensPage {
     
@@ -38,7 +30,7 @@ public class KittensInstructions extends KittensPage {
 
     public KittensHome clickHome() {
         getTitleLink().click();
-        return getKittensHome();
+        return asKittensHome();
     }       
 
 }

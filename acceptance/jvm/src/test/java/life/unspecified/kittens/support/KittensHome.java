@@ -1,18 +1,11 @@
 package life.unspecified.kittens.support;
 
-import cucumber.api.java.en.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.support.ui.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class KittensHome extends KittensPage {
 
@@ -35,6 +28,18 @@ public class KittensHome extends KittensPage {
 		return getElementById("play");
 	}
 
+	public void assertPlayButtonVisible() {
+		assertNotNull("Play button is on page", getPlayButton());
+		assertTrue("Play button is visible", getPlayButton().isDisplayed());
+		assertEquals("Play button says play", "Play", getPlayButton().getText());
+	}
+
+	public void assertContinueButtonVisible() {
+		assertNotNull("Continue button is on page", getPlayButton());
+		assertTrue("Continue button is visible", getPlayButton().isDisplayed());
+		assertEquals("Continue button says continue", "Continue", getPlayButton().getText());
+	}
+
 	public boolean hasPlayButton() {
 		return getPlayButton() != null;
 	}
@@ -45,12 +50,12 @@ public class KittensHome extends KittensPage {
 
 	public KittensInstructions clickInstructions() {
 		getTitleLink().click();
-		return getKittensInstructions();
+		return asKittensInstructions();
 	}
 
 	public KittensGame clickPlayButton() {
 		getPlayButton().click();
-		return getKittensGame();
+		return asKittensGame();
 	}
 
 	public KittensGame clickContinueButton() {

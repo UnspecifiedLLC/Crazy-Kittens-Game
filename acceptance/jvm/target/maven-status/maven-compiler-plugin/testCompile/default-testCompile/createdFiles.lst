@@ -1,8 +1,10 @@
-life/unspecified/kittens/support/KittensPage.class
 life/unspecified/kittens/support/KittensGame.class
-life/unspecified/kittens/RunCukesTest.class
-life/unspecified/kittens/support/KittensInstructions.class
 life/unspecified/kittens/support/KittensHome.class
 se/thinkcode/itake/RunCukesTest.class
 se/thinkcode/itake/StepDefinitions.class
-life/unspecified/kittens/StepDefinitions.class
+life/unspecified/kittens/support/KittensPage.class
+life/unspecified/kittens/NavigationStepDefinitions.class
+life/unspecified/kittens/RunCukesTest.class
+life/unspecified/kittens/support/KittensInstructions.class
+life/unspecified/kittens/GoogleStepDefinitions.class
+life/unspecified/kittens/StepSetupHooks.class

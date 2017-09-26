@@ -1,8 +1,10 @@
 /usr/src/mymaven/src/test/java/life/unspecified/kittens/support/KittensGame.java
 /usr/src/mymaven/src/test/java/life/unspecified/kittens/support/KittensInstructions.java
 /usr/src/mymaven/src/test/java/life/unspecified/kittens/support/KittensPage.java
+/usr/src/mymaven/src/test/java/life/unspecified/kittens/GoogleStepDefinitions.java
 /usr/src/mymaven/src/test/java/life/unspecified/kittens/support/KittensHome.java
 /usr/src/mymaven/src/test/java/se/thinkcode/itake/StepDefinitions.java
+/usr/src/mymaven/src/test/java/life/unspecified/kittens/StepSetupHooks.java
 /usr/src/mymaven/src/test/java/se/thinkcode/itake/RunCukesTest.java
 /usr/src/mymaven/src/test/java/life/unspecified/kittens/RunCukesTest.java
-/usr/src/mymaven/src/test/java/life/unspecified/kittens/StepDefinitions.java
+/usr/src/mymaven/src/test/java/life/unspecified/kittens/NavigationStepDefinitions.java
