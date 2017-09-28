@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/usr/src/mymaven
     working_dir: /usr/src/mymaven
-    command: mvn clean test
+    command: mvn clean test surefire-report:report
 
 # volumes: 
   # mymaven:
