@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "8080:8080"
+  selenium-hub: 
+    image: "selenium/hub:3.5.3-astatine"
+    ports:
+      - 4444:4444
+    volumes: 
+      - "/dev/shm:/dev/shm" 
+#  redis:
+#    image: "redis:alpine"
