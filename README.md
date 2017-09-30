@@ -22,6 +22,12 @@ Defect(s) uncovered:
 
 ```
 
+<details>
+    <summary>click here to view <b>Execution command</b></summary>
+
+    ./execute.sh
+</details>
+
 
 <details>
     <summary>click here to view <b>Test Results</b></summary>
