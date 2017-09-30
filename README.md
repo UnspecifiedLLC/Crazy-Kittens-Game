@@ -16,6 +16,13 @@ The basics ...
 
 What unit test cases should exist in here?
 ```
+
+<details>
+    <summary>click here to view <b>Execution command</b></summary>
+
+    ./execute.sh
+</details>
+
 <details>
     <summary>click here to view <b>Test Results</b></summary>
     <img width="50%" src="assets/results.png"/>
