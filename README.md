@@ -16,9 +16,13 @@ The basics ...
 
 What unit test cases should exist in here?
 ```
+<details>
+    <summary>click here to view <b>Test Results</b></summary>
+    <img width="50%" src="assets/results.png"/>
 
-You have died of dysentery.
+    You have died of dysentery.
+</details>
+
 
 To try again: [turn to page 23](../page-23/README.md)
 
-<img width="50%" src="assets/results.png"/>
