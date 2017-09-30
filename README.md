@@ -20,3 +20,5 @@ What unit test cases should exist in here?
 You have died of dysentery.
 
 To try again: [turn to page 23](../page-23/README.md)
+
+<img width="50%" src="assets/results.png"/>
