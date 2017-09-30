@@ -6,7 +6,7 @@
 #### Will you survive or will you die of dysentery?
 *******
 
-You wake up slowly .. it's dark in this room. You don't know where you are or remember how you got there.  It's damp, the air hangs around your skin, not moving. The first thing you think of is a dungeon, like in those movies set during the Medieval Period. 
+You wake up slowly ... it's dark in this room. You don't know where you are or remember how you got there.  It's damp, the air hangs around your skin, not moving. The first thing you think of is a dungeon, like in those movies set during the Medieval Period. 
 
 You blink hard and wake a little more, and realize that you can hear sounds ... quiet, low, almost rumbly sounds.  Is that the purr of a cat?  As your eyes adjust to the darkness, you realize that you can see movement ... like the whole floor is moving ... snakes?
 
