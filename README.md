@@ -25,7 +25,7 @@ Defect(s) uncovered:
 
 <details>
     <summary>click here to view <b>Test Results</b></summary>
-    <img width="33%" src="assets/results.png"/>
+    <img width="50%" src="assets/results.png"/>
 </details>
 
 <hr>
