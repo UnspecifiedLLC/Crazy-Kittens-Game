@@ -16,6 +16,14 @@ The basics:
 - for the first 1 rainbow worth of effort, which direction do you choose?
 ```
 
+
+<details>
+    <summary>click here to view <b>Execution command</b></summary>
+
+    ./execute.sh
+</details>
+
+
 If you choose to spend one rainbow of effort on "Unit Tests": [turn to page 23](../page-23/README.md)
 
 If you choose to spend one rainbow of effort on "Acceptance Tests": [turn to page 42](../page-42/README.md)
