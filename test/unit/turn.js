@@ -1,14 +1,11 @@
 
 suite('Crazy Kittens.Turn', function() {
     
-    setup(function(done) {
+    setup(function() {
         console.log("Turn", Turn)
-        done()
     })
 
-    test('left should be a function', function(done) {
-        //console.log(the_birds)
-        //assert.isFunction(the_birds[0].left)
-        done()
+    test('player should be user (player 1)', function() {
+        assert.equal(Turn.player, 1)
     })
 })

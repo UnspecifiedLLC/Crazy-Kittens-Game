@@ -10,11 +10,15 @@ suite('Crazy Kittens.Game', function() {
         })
     })
     suite('Initialized Game', function() {
-        setup(function() {
-            Game.setUpGame()
-        })
         test('regular deck should contain 38 cards', function() {
+            Game.setUpGame()
             assert.equal(Game.regularDeck.length, 38)
+        })
+        test('user deck should contain 5 cards', function() {
+            assert.equal(Game.usersDeck.length, 5)
+        })
+        test('computer deck should contain 5 cards', function() {
+            assert.equal(Game.compsDeck.length, 5)
         })
     })
 })
