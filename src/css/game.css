@@ -1,0 +1,107 @@
+.main-game{
+  width: 100vw;
+  height: 70%;
+
+
+  background-color: #ECECEC;
+
+  font-family: 'Architects Daughter', cursive;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.main-game-over{
+  width: 100vw;
+  height: 70%;
+
+
+  background-color: #ECECEC;
+
+  font-family: 'Architects Daughter', cursive;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.main-game-over div{
+  margin: 0 auto;
+  width: 500px;
+}
+
+.main-game-over img, .main-game-over p{
+  display: inline-block;
+}
+
+.main-game-over p{
+  text-align: center;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
+  font-size: 4em;
+  height: 140px;
+}
+
+.lose{
+  background-color: tomato;
+}
+
+.win{
+  background-color: green;
+}
+
+.game-section {
+  margin: 0 auto;
+}
+
+
+.game-section img{
+  display: inline-block;
+  height: 150px;
+  margin: 5px;
+}
+
+.drawPile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.computers-button{
+  background-color: green;
+}
+
+#game-status-instructions{
+  width: 250px;
+  height: 200px;
+  background-color: white;
+}
+
+#game-note{
+  color: red;
+  font-weight: bold;
+}
+
+#user-section img:hover, #draw-discard img:hover{
+  cursor: pointer;
+}
+
+#tradeDiv{
+  display: inline-block;
+  width: 200px;
+}
+
+#tradeDiv button, #tradeDiv p{
+  border: 1px solid black;
+  background-color: red;
+  width: 180px;
+}
+
+#tradeDiv button:hover{
+  background-color: orange;
+}
