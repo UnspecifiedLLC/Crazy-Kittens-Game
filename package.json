@@ -1,0 +1,26 @@
+{
+  "name": "crazy-kittens",
+  "version": "1.0.0",
+  "description": "``` The basics ... - after 1 rainbow of effort - developers have learned about unit tests - a unit testing framework has been added - a couple of unit tests have been written   - Unit tests to consider     - stuff in onImageClick in main.js - the unit tests that were written don't even begin to cover the large function that does most of the work - design flaws are identified; take care of that now? Or ...",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnspecifiedLLC/Crazy-Kittens-Game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UnspecifiedLLC/Crazy-Kittens-Game/issues"
+  },
+  "homepage": "https://github.com/UnspecifiedLLC/Crazy-Kittens-Game#readme",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  }
+}
