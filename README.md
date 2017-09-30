@@ -23,6 +23,7 @@ What unit test cases should exist in here?
     You have died of dysentery.
 </details>
 
+<hr>
 
 To try again: [turn to page 23](../page-23/README.md)
 
