@@ -6,8 +6,8 @@ While writing your feature using BDD
 
 ```
 The basics:
-- New feature is added, using BDD, so there are cucumber/acceptance tests covering it
-- One of the tests for this exposes a bug that was not previously identified
+✖ New feature is added, using BDD, so there are cucumber/acceptance tests covering it
+✖ One of the tests for this exposes a bug that was not previously identified
 - with no unit tests and large function, difficult to debug
 - highlight high level of coverage with acceptance tests, but no unit tests
 
