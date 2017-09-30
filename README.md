@@ -22,4 +22,12 @@ Defect(s) uncovered:
 
 ```
 
+
+<details>
+    <summary>click here to view <b>Test Results</b></summary>
+    <img width="33%" src="assets/results.png"/>
+</details>
+
+<hr>
+
 To try again: [turn to page 42](../page-42/README.md)
