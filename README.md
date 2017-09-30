@@ -1,27 +1,38 @@
-## [cyoa-kittens](../page-0/README.md) >> [Page 42 Chapter 2](../page-42/README.md) >> Page 17 Chapter 3
+## [Crazy Kittens](../page-0/README.md) >> Page 42 Chapter 2
 
 ```
-While writing more acceptance tests you uncover some defects...
-
-The end.
+You dodge to the left and fall into a jungle of acceptance tests...
 ```
 
 ```
-The basics:
-- Should be something in here about defects uncovered being hard to track down and identify in the large monolithic function
-- acceptance tests are coming along well and testers are getting good at writing them
-- unit tests are now also added (these are the same unit tests that we add in the original page 23 code)
+The basics ...
+- putting in the framework (cucumber) takes time
+- but ... 1 or 2 acceptance test later, there is some more clarity around the state of the application from a higher-level perspective (I mean, non-coders can see the test run and pass and see their value)
+- if all of those tests pass, though, what is the benefit?
+  - domain language
+  - all on the same page
+  - act as regression
+  - owners can see state and value
+  - tests are in code
+  - faster feedback loops
+ 
+Test Cases that should be in this branch (cucumber/selenium tests):
 
-Test Cases:
-- Lots of acceptance tests
-- also adding unit tests
+- Scenario: Instructions are available on home page
+    Given I am on the game home page
+    When I click on Instructions
+    Then the instructions are displayed
 
-Defect(s) uncovered:
-- identify that the words about Turn should have said "Turn: User"
+  Scenario: Clicking Play starts the game
+    Given I am on the game home page
+    When I click the Play button
+    Then a new game is displayed
 
+Notes on choices:
+- Yay! We see value in high level tests and our test strategy is sound; let's add new features
+- We're on a roll! Let's add a bunch more acceptance tests!
 
 ```
-
 
 <details>
     <summary>click here to view <b>Test Results</b></summary>
@@ -31,4 +42,7 @@ Defect(s) uncovered:
 
 <hr>
 
-To try again: [turn to page 42](../page-42/README.md)
+If you choose Add a new feature using BDD: [turn to page 8](../page-8/README.md)
+
+If you choose More Acceptance Tests: [turn to page 17](../page-17/README.md)
+
