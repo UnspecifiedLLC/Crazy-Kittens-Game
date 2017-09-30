@@ -1,8 +1,7 @@
 var spec = {
   'unit': [
     'cards',
-    'game',
-    'turn'
+    'game'
   ]
 };
 Object.keys(spec).map(function(folder) {
