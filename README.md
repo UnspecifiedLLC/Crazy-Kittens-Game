@@ -20,6 +20,12 @@ Test cases:
 Insert something funny here.
 
 <details>
+    <summary>click here to view <b>Execution command</b></summary>
+
+    ./execute.sh
+</details>
+
+<details>
     <summary>click here to view <b>Test Results</b></summary>
     <img width="33%" src="assets/results.png"/>
 </details>
