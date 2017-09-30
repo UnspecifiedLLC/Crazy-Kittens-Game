@@ -101,11 +101,11 @@ let Game = (function(){
 
 
       // 2nd deals 4 cards from the Regular Deck to the users deck
-      this.dealCards(this.regularDeck, this.usersDeck, 4);
+      this.dealToUser()
       // console.log('Users Deck: ', this.usersDeck);
 
       // 3rd deals 4 cards from the Regular Deck to the computers deck
-      this.dealCards(this.regularDeck, this.compsDeck, 4);
+      this.dealToCom()
       // console.log('Users Deck: ', this.compsDeck);
 
       // 4th deals 1 defuse card to the users deck
@@ -123,9 +123,7 @@ let Game = (function(){
       console.log('Comps Deck: ', this.compsDeck);
 
       //6th puts the remaining cards from the Regular Deck and the crazy Kittens into the drawDeck
-      for(let i = 0; i < this.regularDeck.length; i++){
-        this.drawPile.push(this.regularDeck[i]);
-      }
+      this.dealToDraw()
 
       // drawPile will have (38+x) 48 cards in total
       for(let i = 0; i < 10; i++){
@@ -141,7 +139,17 @@ let Game = (function(){
       console.log('Draw Pile: ', this.drawPile);
 
     },
-
+    dealToDraw: function(){
+      for(let i = 0; i < this.regularDeck.length; i++){
+        this.drawPile.push(this.regularDeck[i]);
+      }
+    },
+    dealToUser: function(){
+      this.dealCards(this.regularDeck, this.usersDeck, 4);
+    },
+    dealToCom: function(){
+      this.dealCards(this.regularDeck, this.compsDeck, 4);
+    },
     copyCard: function(originalCard){
       let newObj = {};
       newObj.action = originalCard.action;
