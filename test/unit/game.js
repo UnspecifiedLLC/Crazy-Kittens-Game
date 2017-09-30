@@ -1,14 +1,20 @@
 
 suite('Crazy Kittens.Game', function() {
     
-    setup(function(done) {
+    setup(function() {
         console.log("Game", Game)
-        done()
     })
-
-    test('left should be a function', function(done) {
-        //console.log(the_birds)
-        //assert.isFunction(the_birds[0].left)
-        done()
+    suite('Uninitialized Game', function() {
+        test('regular deck should contain 46 cards', function() {
+            assert.equal(Game.regularDeck.length, 46)
+        })
+    })
+    suite('Initialized Game', function() {
+        setup(function() {
+            Game.setUpGame()
+        })
+        test('regular deck should contain 38 cards', function() {
+            assert.equal(Game.regularDeck.length, 38)
+        })
     })
 })

@@ -6,9 +6,7 @@ suite('Crazy Kittens.Cards', function() {
         done()
     })
 
-    test('left should be a function', function(done) {
-        //console.log(the_birds)
-        //assert.isFunction(the_birds[0].left)
-        done()
+    test('regular deck should contain 46 cards', function() {
+        assert.equal(46, Cards.regularDeck.length)
     })
 })
