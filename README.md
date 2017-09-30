@@ -29,6 +29,13 @@ Choices:
 - Unit tests are cool, and now let's focus on acceptance tests
 ```
 
+<details>
+    <summary>click here to view <b>Test Results</b></summary>
+    <img width="50%" src="assets/results.png"/>
+
+    You have died of dysentery.
+</details>
+
 If you choose Refactor: [turn to page 13](../page-13/README.md)
 
 If you choose Double Down on Unit Tests: [turn to page 74](../page-74/README.md)
