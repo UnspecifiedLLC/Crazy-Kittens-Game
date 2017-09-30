@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: Scenario: I continue a game
 -------------------------------------------------------------------------------
-Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.745 sec - in Scenario: I continue a game
+Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.129 sec - in Scenario: I continue a game
