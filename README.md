@@ -32,8 +32,6 @@ Choices:
 <details>
     <summary>click here to view <b>Test Results</b></summary>
     <img width="33%" src="assets/results.png"/>
-
-    You have died of dysentery.
 </details>
 
 
