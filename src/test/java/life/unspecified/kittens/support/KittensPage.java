@@ -2,6 +2,7 @@ package life.unspecified.kittens.support;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.By;
 
 public abstract class KittensPage {
 
@@ -26,6 +27,10 @@ public abstract class KittensPage {
 
     public WebElement getElementById(String id) { 
          return getDriver().findElementById(id);
+    }
+
+    public WebElement getPageTitle() {
+       return getDriver().findElement(By.cssSelector("head > title"));
     }
 
     public WebElement getTitle() {
