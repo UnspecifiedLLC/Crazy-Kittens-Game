@@ -1,6 +1,7 @@
 package life.unspecified.kittens;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -32,12 +33,6 @@ public class NavigationStepDefinitions {
     public void i_click_play() throws Throwable {
         kittensPage = ((KittensHome)kittensPage).clickPlayButton();
     }
-
-   // @Then("^a game should be started$")
-   // public void a_game_should_be_started() throws Throwable {
-   //   // Write code here that turns the phrase above into concrete actions
-   //     throw new PendingException();
-   // }
 
     @Given("^I load crazy kittens$")
     public void i_load_crazy_kittens() throws Throwable {
@@ -90,5 +85,47 @@ public class NavigationStepDefinitions {
         kittensPage = ((KittensHome)kittensPage).clickPlayButton();
     }
 
+    @Given("^a game is being played$")
+     public void a_game_is_being_played() throws Throwable {
+        kittensPage = kittensPage.reset();
+        kittensPage = ((KittensHome)kittensPage).clickPlayButton();
+     }
+     
+     @When("^it is the User's Turn$")
+     public void it_is_the_User_s_Turn() throws Throwable {
+        kittensPage.asKittensGame().assertIsMyTurn();
+     }
+     
+     @Then("^the page title displays Turn: Player$")
+     public void the_page_title_displays_Turn_User() throws Throwable {
+        assertEquals("Title shows it is the player's turn", "Crazy Kittens - Turn: Player", kittensPage.getPageTitle().getText());
+     }
+     
+     @Then("^the content area also displays Turn: Player$")
+     public void the_content_area_also_displays_Turn_User() throws Throwable {
+        assertEquals("The game display indicates it is the player's turn", "Turn: Player", kittensPage.asKittensGame().getGameTurn().getText());
+     }
+     
+     @When("^it is the Computer's Turn$")
+     public void it_is_the_Computer_s_Turn() throws Throwable {
+        kittensPage.asKittensGame().assertIsComputerTurn();
+     }
+     
+     @Then("^the page title displays Turn: Computer$")
+     public void the_page_title_displays_Turn_Computer() throws Throwable {     
+        assertEquals("Title shows it is the computer's turn", "Crazy Kittens - Turn: Computer", kittensPage.getPageTitle().getText());
+    }
+     
+     @Then("^the content area also displays Turn: Computer$")
+     public void the_content_area_also_displays_Turn_Computer() throws Throwable {
+        assertEquals("The game display indicates it is the computer's turn", "Turn: Computer", kittensPage.asKittensGame().getGameTurn().getText());
+     }
+
+
+    @When("^the user finishes their turn$")
+    public void the_user_finishes_their turn() throws Throwable {
+        throw new RuntimeException("This needs implemented");
+        kittensPage.asKittensGame().assertIsComputerTurn();
+    }
 
 }

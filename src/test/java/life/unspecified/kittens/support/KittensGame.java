@@ -43,11 +43,19 @@ public class KittensGame extends KittensPage {
     }
 
     public boolean isMyTurn() {
-        return getGameTurn().getText().equals("You");
+        return getGameTurn().getText().equals("Turn: You");
     }
 
     public void assertIsMyTurn() {
+        assertEquals("It is the player's turn", "Turn: You", getGameTurn().getText());
+    }
 
+    public boolean isComputerTurn() {
+        return getGameTurn().getText().equals("Turn: Computer");
+    }
+
+    public void assertIsComputerTurn() {
+        assertEquals("It is the computer's turn", "Turn: Computer", getGameTurn().getText());
     }
 
     public KittensHome clickHome() {
