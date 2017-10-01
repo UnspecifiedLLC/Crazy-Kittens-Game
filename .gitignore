@@ -1,6 +1,4 @@
 .DS_Store
 /targetnode_modules/
 package-lock.json
-target/site/surefire-report.html
-target/site/surefire-report.html
-target/surefire-reports/TEST-Scenario: I continue a game.xml
+target/
