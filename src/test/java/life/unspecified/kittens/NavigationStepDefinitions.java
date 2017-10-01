@@ -49,12 +49,17 @@ public class NavigationStepDefinitions {
         ((KittensHome)kittensPage).assertPlayButtonVisible();
     }
 
+     @Then("^I see an instructions link$")
+    public void i_see_an_instructions_link() throws Throwable {
+        ((KittensHome)kittensPage).assertInstructionsLinkVisible();     
+    }
+
     @When("^I click instructions$")
     public void i_click_instructions() throws Throwable {
         kittensPage = ((KittensHome)kittensPage).clickInstructions();
     }
 
-    @Then("^I am on the instructions page$")
+    @Then("^the instructions are displayed$")
     public void i_am_on_the_instructions_page() throws Throwable {
         ((KittensInstructions)kittensPage).assertIsValidState();
     }
