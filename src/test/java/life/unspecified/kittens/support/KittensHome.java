@@ -24,10 +24,6 @@ public class KittensHome extends KittensPage {
 		assertNotNull("Play button is present", getPlayButton());
 	}
 
-	public WebElement getPlayButton() {
-		return getElementById("play");
-	}
-
 	public void assertPlayButtonVisible() {
 		assertNotNull("Play button is on page", getPlayButton());
 		assertTrue("Play button is visible", getPlayButton().isDisplayed());
@@ -38,6 +34,16 @@ public class KittensHome extends KittensPage {
 		assertNotNull("Continue button is on page", getPlayButton());
 		assertTrue("Continue button is visible", getPlayButton().isDisplayed());
 		assertEquals("Continue button says continue", "Continue", getPlayButton().getText());
+	}
+
+	public void assertInstructionsLinkVisible() {
+		assertNotNull("Title link is on page", getTitleLink());
+		assertTrue("Title link is visible", getTitleLink().isDisplayed());
+		assertEquals("Title link says instructions", "Instructions", getTitleLink().getText());
+	}
+
+	public WebElement getPlayButton() {
+		return getElementById("play");
 	}
 
 	public boolean hasPlayButton() {
