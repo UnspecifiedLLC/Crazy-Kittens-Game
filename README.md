@@ -30,5 +30,5 @@ There is excitement on the team about using BDD as a way to develop new features
 
 If you choose Yay! We see value in high level tests and our test strategy is sound; let's add new features!: [turn to page 8](../page-8/README.md)
 
-If you choose We're on a roll! Let's add a bunch more acceptance tests!: [turn to page 17](../page-17/README.md)
+If you choose Let's work on lower level tests next!: [turn to page 17](../page-17/README.md)
 
