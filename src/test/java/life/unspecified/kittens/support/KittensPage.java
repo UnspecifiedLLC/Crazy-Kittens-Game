@@ -2,10 +2,11 @@ package life.unspecified.kittens.support;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.By;
 
 public abstract class KittensPage {
 
-//	public static String KITTENS_URL = "http://localhost:8080";
+	// public static String KITTENS_URL = "http://localhost:8080";
 //	public static String KITTENS_URL = "http://jvm_selenium-chrome_1:8080";
 	public static String KITTENS_URL = "http://kittens:8080";
     public static String WELCOME_MSG = "Welcome to Crazy Kittens";
@@ -14,6 +15,7 @@ public abstract class KittensPage {
     private KittensHome kittensHome;
     private KittensInstructions kittensInstructions;
     private KittensGame kittensGame;
+    private KittensGameModal kittensGameModal;
 
     protected KittensPage(RemoteWebDriver driver) {
         this.driver = driver;
@@ -26,6 +28,10 @@ public abstract class KittensPage {
 
     public WebElement getElementById(String id) { 
          return getDriver().findElementById(id);
+    }
+
+    public WebElement getPageTitle() {
+       return getDriver().findElement(By.cssSelector("head > title"));
     }
 
     public WebElement getTitle() {
@@ -68,6 +74,12 @@ public abstract class KittensPage {
         if (this.kittensGame == null) 
             this.kittensGame = new KittensGame(getDriver());
         return this.kittensGame;
+    }
+    
+    public KittensGameModal asKittensGameModal() {
+        if (this.kittensGameModal == null) 
+            this.kittensGameModal = new KittensGameModal(getDriver());
+        return this.kittensGameModal;
     }
 
 }

@@ -433,7 +433,7 @@ function addDrawDiscardPiles() {
 
 
   if(Game.turn){
-    $turn = $('<p>').attr('id', 'game-turn').text("Turn: You");
+    $turn = $('<p>').attr('id', 'game-turn').text("Turn: Player");
   }else{
     $turn = $('<p>').attr('id', 'game-turn').text("Turn: Computer");
   }

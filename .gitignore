@@ -2,3 +2,6 @@
 /targetnode_modules/
 package-lock.json
 target/
+.project
+.classpath
+.settings/
