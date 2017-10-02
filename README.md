@@ -1,43 +1,18 @@
 ## [Crazy Kittens](../page-0/README.md) >> [Page 42 Chapter 2](../page-42/README.md) >> Page 8 Chapter 3
 
-```
-While writing your feature using BDD
-```
+BDD IS AWESOME! LET'S DO IT FOR EVERYTHING!
 
-```
-The basics:
-✖ New feature is added, using BDD, so there are cucumber/acceptance tests covering it
-✖ One of the tests for this exposes a bug that was not previously identified
-- with no unit tests and large function, difficult to debug
-- highlight high level of coverage with acceptance tests, but no unit tests
+The first rainbow of effort went so well that the team decided to try doing a new feature using that approach.
 
-Specifics:
-- New feature should be:
-  - Page title should change based on whose turn it is
-- Acceptance test(s) for it should be:
-  - Scenario: On user turn, title shows user
-    Given a game is being played
-    When it is the User's Turn
-    Then the page title displays Turn: User
-    And the content area also displays Turn: User
+This new feature has cucumber scenarios covering it, and unit tests for it, and everyone is feeling good about the coverage of this new fearture.  
 
-  - Scenario: On computer turn, title shows computer
-    Given a game is being played
-    When it is the Computer's Turn
-    Then the page title displays Turn: Computer
-    And the content area also displays Turn: Computer
+One thing that the team noticed is that the existing codebase is still largely uncovered with tests, and sometimes they had trouble with understanding what was going on in some of the previous legacy code, or there was something acting unexpectedly and with the way the code is designed, it was tricky to track down exactly what was going on.  While the shiny new is fun and works well, the stink of the old poorly designed code hangs over the team like smog ... everyone knows that should be addressed soon as well.
 
-- Bug identified should be:
-  - Main content area for Turn should have always said User
-  
+While higher level acceptance tests are great for quick wins and progress that show the team and those outside the team test coverage and status, the legacy codebase is still lacking in unit tests.  The coverage can only go so far, and many detailed combinations of test cases should not be coverd here.  The existing features are still left a little naked and new development of features is still pretty risky without these lower level tests.
 
-```
-[you were eaten by a Grue](https://en.wikipedia.org/wiki/Grue_(monster))
+[The End](http://68.media.tumblr.com/39b3a368cd63550e6fb6f222f4123739/tumblr_o2nfa9blEN1rz2qoko1_500.jpg)
 
-
-___just kidding: Use the above line if you want the user to die___
-
-The end
+<hr>
 
 <details>
     <summary>click here to view <b>Test Results</b></summary>
