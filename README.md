@@ -10,7 +10,7 @@ Putting this new framework in has taken time, however, and everyone had to learn
 
 On the other hand, these tests are very high level, and do not thoroughly cover many combinations of scenarios. Testing combinations of possible behaviors through the UI is very expensive and involves writing a LOT of code, and also, as lots of these tests are written, they become more brittle, susceptible to application changes and timing issues, and transient failures.
 
-There is excitement on the team about using BDD as a way to develop new features, and some team members really want to try it that way.  Maybe they can even include unit tests with this new feature ... On the3 other hand, continuing to leave the rest of the application without tests leaves open the possibility that something will break and the team will not know it.
+There is excitement on the team about using BDD as a way to develop new features, and some team members really want to try it that way.  Maybe they can even include unit tests with this new feature ... On the other hand, continuing to leave the rest of the application without tests leaves open the possibility that something will break and the team will not know it.
 
 
 <hr>
