@@ -15,6 +15,7 @@ public abstract class KittensPage {
     private KittensHome kittensHome;
     private KittensInstructions kittensInstructions;
     private KittensGame kittensGame;
+    private KittensGameModal kittensGameModal;
 
     protected KittensPage(RemoteWebDriver driver) {
         this.driver = driver;
@@ -73,6 +74,12 @@ public abstract class KittensPage {
         if (this.kittensGame == null) 
             this.kittensGame = new KittensGame(getDriver());
         return this.kittensGame;
+    }
+    
+    public KittensGameModal asKittensGameModal() {
+        if (this.kittensGameModal == null) 
+            this.kittensGameModal = new KittensGameModal(getDriver());
+        return this.kittensGameModal;
     }
 
 }

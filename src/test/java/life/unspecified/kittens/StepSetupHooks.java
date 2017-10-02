@@ -16,8 +16,8 @@ import cucumber.api.java.Before;
 
 public class StepSetupHooks {
 
-//	private static final String SELENIUM_DRIVER_URL = "http://localhost:4444/wd/hub";
-	private static final String SELENIUM_DRIVER_URL = "http://selenium-chrome:4444/wd/hub";
+	private static final String SELENIUM_DRIVER_URL = "http://localhost:4444/wd/hub";
+//	private static final String SELENIUM_DRIVER_URL = "http://selenium-chrome:4444/wd/hub";
 
 	private static RemoteWebDriver driver = null;
 
@@ -26,9 +26,9 @@ public class StepSetupHooks {
 		if (driver == null) {
 				DesiredCapabilities capability = DesiredCapabilities.chrome();
 				URL driverLocation = new URL(SELENIUM_DRIVER_URL);
-				System.out.println("Setup Driver:\n");
-				System.out.println("\t" + capability.toString());
-				System.out.println("\tDriver Location " + driverLocation.toString());
+//				System.out.println("Setup Driver:\n");
+//				System.out.println("\t" + capability.toString());
+//				System.out.println("\tDriver Location " + driverLocation.toString());
 
 			try {
 				driver = new RemoteWebDriver(driverLocation, capability);

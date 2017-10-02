@@ -18,10 +18,7 @@ public class KittensGameModal extends KittensPage {
 	}
 
 	public boolean isValidState() {
-		WebElement title = getTitle();
-		boolean isGamePage = (title != null
-				&& title.getText().equals(life.unspecified.kittens.support.KittensGame.PLAYING_MSG));
-		return isGamePage && getModal().isDisplayed();
+		return getModal().isDisplayed();
 	}
 
 	public void assertIsValidState() {
@@ -52,7 +49,7 @@ public class KittensGameModal extends KittensPage {
 		return getDriver().findElement(By.cssSelector("#modal-instructions"));
 	}
 
-	public String getCardInstuctions() {
+	public String getCardInstructions() {
 		return getModalInstructions().getText();
 	}
 
