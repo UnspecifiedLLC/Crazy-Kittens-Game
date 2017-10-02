@@ -2,7 +2,7 @@
 
 Acceptance Tests ARE THE BEST!!!
 
-You hve chosen to start with focusing your automation on higher-level acceoptance tests (you may know these as functinal tests, ui tests, user tests, selenium tests, a waste of time, etc).
+You have chosen to start with focusing your automation on higher-level acceoptance tests (you may know these as functinal tests, ui tests, user tests, selenium tests, a waste of time, etc).
 
 After researching with the team, an approach with BDD using Cucumber seemed to make the most sense.  The scenarios and test code are all written in the same codebase with the production code, so everyone sees progress as it happens and can run the tests at any time.  The scenarios help to drive everyone to a common language, with vocabulary for components and behaviors that is consistent throughout and through different parts of the application.  The scenarios are plain english and business level contributors can both understand and contribute.
 
