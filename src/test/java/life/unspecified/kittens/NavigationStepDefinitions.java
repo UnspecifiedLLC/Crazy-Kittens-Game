@@ -1,7 +1,7 @@
 package life.unspecified.kittens;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -9,6 +9,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import life.unspecified.kittens.support.KittensGame;
+import life.unspecified.kittens.support.KittensGameModal;
 import life.unspecified.kittens.support.KittensHome;
 import life.unspecified.kittens.support.KittensInstructions;
 import life.unspecified.kittens.support.KittensPage;
@@ -101,8 +102,8 @@ public class NavigationStepDefinitions {
         assertEquals("Title shows it is the player's turn", "Crazy Kittens - Turn: Player", kittensPage.getPageTitle().getText());
      }
      
-     @Then("^the content area also displays Turn: Player$")
-     public void the_content_area_also_displays_Turn_User() throws Throwable {
+     @Then("^the content area displays Turn: Player$")
+     public void the_content_area_displays_Turn_User() throws Throwable {
         assertEquals("The game display indicates it is the player's turn", "Turn: Player", kittensPage.asKittensGame().getGameTurn().getText());
      }
      
@@ -116,16 +117,25 @@ public class NavigationStepDefinitions {
         assertEquals("Title shows it is the computer's turn", "Crazy Kittens - Turn: Computer", kittensPage.getPageTitle().getText());
     }
      
-     @Then("^the content area also displays Turn: Computer$")
-     public void the_content_area_also_displays_Turn_Computer() throws Throwable {
+     @Then("^the content area displays Turn: Computer$")
+     public void the_content_area_displays_Turn_Computer() throws Throwable {
         assertEquals("The game display indicates it is the computer's turn", "Turn: Computer", kittensPage.asKittensGame().getGameTurn().getText());
      }
 
 
     @When("^the user finishes their turn$")
-    public void the_user_finishes_their turn() throws Throwable {
-        throw new RuntimeException("This needs implemented");
-        kittensPage.asKittensGame().assertIsComputerTurn();
+    public void the_user_finishes_their_turn() throws Throwable {
+    		KittensGameModal gameModal = kittensPage.asKittensGame().clickPlayerCard(0);
+        gameModal.waitUntilDisplayed();
+        gameModal.assertIsValidState();
+        gameModal.getDoButton().click();
+        gameModal.waitUntilHidden();
+        gameModal = kittensPage.asKittensGame().clickPlayerCard(1);
+        gameModal.waitUntilDisplayed();
+        gameModal.getDoButton().click();
+        gameModal.waitUntilHidden();
+        kittensPage.asKittensGame().clickComputerCard(0);
+        kittensPage.asKittensGame().clickDrawCard();
     }
 
 }
