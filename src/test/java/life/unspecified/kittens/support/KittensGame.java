@@ -5,10 +5,12 @@ import static org.junit.Assert.assertNotNull;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.By;
+import java.util.List;
 
 public class KittensGame extends KittensPage {
 
-    private static final String PLAYING_MSG = "Crazy Kittens";
+    protected static final String PLAYING_MSG = "Crazy Kittens";
 
 	KittensGame(RemoteWebDriver driver) {
         super(driver);
@@ -25,6 +27,11 @@ public class KittensGame extends KittensPage {
         assertEquals("Title shows welcome message", PLAYING_MSG, title.getText());
         assertNotNull("Main Game Section is present", getMainGameSection());
     }
+
+    public KittensHome clickHome() {
+        getTitleLink().click();
+        return asKittensHome();
+    }  
 
     public WebElement getMainGameSection() {
         return getDriver().findElementByXPath("/html/body/main");
@@ -58,9 +65,39 @@ public class KittensGame extends KittensPage {
         assertEquals("It is the computer's turn", "Turn: Computer", getGameTurn().getText());
     }
 
-    public KittensHome clickHome() {
-        getTitleLink().click();
-        return asKittensHome();
-    }    
+    public WebElement getUserTable() {
+        return getDriver().findElement(By.cssSelector("#user-table"));
+    }
+
+    public WebElement getComputerTable() {
+        return getDriver().findElement(By.cssSelector("#computer-table"));
+    }
+
+    public List<WebElement> getCardElements(WebElement cardTable) {
+        return cardTable.findElements(By.xpath(".//img"));
+    }
+
+    public KittensGameModal clickPlayerCard(int cardIndex) {
+        getCardElements(getUserTable()).get(cardIndex).click();
+        KittensGameModal kittensGameModal = new KittensGameModal(getDriver());
+        return kittensGameModal;
+    }  
+
+    public KittensGameModal clickComputerCard(int cardIndex) {
+        getCardElements(getComputerTable()).get(cardIndex).click();
+        return new KittensGameModal(getDriver());
+    }  
+
+    public WebElement getDrawPileElement() {
+        return getDriver().findElement(By.cssSelector("#draw-pile"));
+    }
+
+    public WebElement getDiscardPileElement() {
+        return getDriver().findElement(By.cssSelector("#discard-pile"));
+    }
+
+    public void clickDrawCard() {
+        getDrawPileElement().click();
+    }
 
 }

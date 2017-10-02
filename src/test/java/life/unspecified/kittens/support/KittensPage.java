@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public abstract class KittensPage {
 
-//	public static String KITTENS_URL = "http://localhost:8080";
+	// public static String KITTENS_URL = "http://localhost:8080";
 //	public static String KITTENS_URL = "http://jvm_selenium-chrome_1:8080";
 	public static String KITTENS_URL = "http://kittens:8080";
     public static String WELCOME_MSG = "Welcome to Crazy Kittens";

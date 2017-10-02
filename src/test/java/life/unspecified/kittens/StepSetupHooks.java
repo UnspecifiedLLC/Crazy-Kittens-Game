@@ -4,11 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.AfterClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -19,8 +16,6 @@ import cucumber.api.java.Before;
 
 public class StepSetupHooks {
 
-	// private static final String SELENIUM_DRIVER_URL =
-	// "http://jvm_selenium-chrome_1:4444/wd/hub";
 //	private static final String SELENIUM_DRIVER_URL = "http://localhost:4444/wd/hub";
 	private static final String SELENIUM_DRIVER_URL = "http://selenium-chrome:4444/wd/hub";
 
